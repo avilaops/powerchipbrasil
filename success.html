@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Realizado com Sucesso!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #667eea;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">✅</div>
+        <h1>Pagamento Realizado!</h1>
+        <p>Sua compra foi processada com sucesso através do Stripe.</p>
+        <p>Você receberá um email de confirmação em breve com os detalhes do pedido.</p>
+
+        <div class="order-details" id="orderDetails">
+            <div class="loading">Carregando detalhes do pedido...</div>
+        </div>
+
+        <a href="/" class="btn-home">Voltar para a Loja</a>
+    </div>
+
+    <script>
+        // Obter session_id da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        if (sessionId) {
+            // Buscar detalhes do pagamento
+            fetch(`/payment-status/${sessionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const detailsDiv = document.getElementById('orderDetails');
+                    detailsDiv.innerHTML = `
+                        <div class="detail-row">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value">${data.status === 'paid' ? 'Pago' : 'Pendente'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ID da Sessão:</span>
+                            <span class="detail-value">${sessionId.substring(0, 30)}...</span>
+                        </div>
+                        ${data.customerEmail ? `
+                        <div class="detail-row">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value">${data.customerEmail}</span>
+                        </div>
+                        ` : ''}
+                        ${data.amountTotal ? `
+                        <div class="detail-row">
+                            <span class="detail-label">Total Pago:</span>
+                            <span class="detail-value">${new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            }).format(data.amountTotal / 100)}</span>
+                        </div>
+                        ` : ''}
+                    `;
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar detalhes:', error);
+                    document.getElementById('orderDetails').innerHTML = `
+                        <div style="color: #666;">
+                            Não foi possível carregar os detalhes do pedido.
+                        </div>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Dependências
+node_modules/
+package-lock.json
+
+# Variáveis de ambiente (contém chaves secretas)
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos de build
+dist/
+build/
+out/
+
+# Arquivos de cache
+.cache/
+.temp/
+tmp/
+
+# Dados gerados
+data/
+posts/
+*.csv
+*.jsonl
+
+# Backups
+*.bak
+*.backup
