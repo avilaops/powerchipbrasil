@@ -14,6 +14,29 @@ const QUIZ_LOG = path.join(DATA_DIR, 'quiz_submissions.jsonl');
 
 // Middleware
 app.use(express.json());
+
+// CORS - Permitir requisições do frontend
+app.use((req, res, next) => {
+    const allowedOrigins = [
+        'https://powerchipbrasil.avila.inc',
+        'https://avilaops.github.io',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000'
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 // Disable default index.html so our explicit '/' route serves powerchip-pro.html
 app.use(express.static('.', { index: false }));
 // Serve generated posts under /posts

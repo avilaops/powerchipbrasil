@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="config.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
@@ -1351,7 +1352,7 @@
 
             try {
                 const stripe = await initStripe();
-                const response = await fetch('/create-checkout-session', {
+                const response = await fetch(`${window.CONFIG.API_URL}/create-checkout-session`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
