@@ -146,10 +146,20 @@ app.post('/create-checkout-session', async (req, res) => {
 app.get('/payment-status/:sessionId', async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+        const md = session.metadata || {};
+        const quiz = {
+            brand: md.vehicle_brand || null,
+            year: md.vehicle_year || null,
+            enginePowerHp: md.engine_power_hp ? Number(md.engine_power_hp) : null,
+            moreTorque: md.pref_more_torque === 'true',
+            throttleResponse: md.pref_throttle_response === 'true',
+            reduceLag: md.pref_reduce_lag === 'true',
+        };
         res.json({
             status: session.payment_status,
             customerEmail: session.customer_details?.email,
             amountTotal: session.amount_total,
+            quiz,
         });
     } catch (error) {
         console.error('Erro ao verificar status:', error);

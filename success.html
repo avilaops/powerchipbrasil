@@ -81,6 +81,24 @@
             text-align: left;
         }
 
+        .section-title {
+            font-weight: 800;
+            color: #333;
+            margin: 8px 0 12px;
+        }
+
+        .pill {
+            display: inline-block;
+            margin-right: 8px;
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
         .detail-row {
             display: flex;
             justify-content: space-between;
@@ -150,7 +168,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const detailsDiv = document.getElementById('orderDetails');
-                    detailsDiv.innerHTML = `
+                    let html = `
                         <div class="detail-row">
                             <span class="detail-label">Status:</span>
                             <span class="detail-value">${data.status === 'paid' ? 'Pago' : 'Pendente'}</span>
@@ -175,6 +193,28 @@
                         </div>
                         ` : ''}
                     `;
+
+                    // Bloco de personalização (Quiz)
+                    const q = data.quiz || {};
+                    const hasVehicle = q.brand || q.year || q.enginePowerHp;
+                    const prefs = [];
+                    if (q.moreTorque) prefs.push('Mais torque');
+                    if (q.throttleResponse) prefs.push('Resposta imediata do acelerador');
+                    if (q.reduceLag) prefs.push('Diminuir lag de respostas');
+
+                    if (hasVehicle || prefs.length) {
+                        html += '<div class="section-title">Personalização do Veículo</div>';
+                        if (hasVehicle) {
+                            html += '<div class="detail-row"><span class="detail-label">Veículo:</span><span class="detail-value">' +
+                                `${q.brand || '—'} ${q.year || ''} ${q.enginePowerHp ? '(' + q.enginePowerHp + ' cv)' : ''}`.trim() +
+                                '</span></div>';
+                        }
+                        if (prefs.length) {
+                            html += '<div style="margin-top:8px;">' + prefs.map(p => `<span class="pill">${p}</span>`).join(' ') + '</div>';
+                        }
+                    }
+
+                    detailsDiv.innerHTML = html;
                 })
                 .catch(error => {
                     console.error('Erro ao carregar detalhes:', error);
