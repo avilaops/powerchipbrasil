@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerChip Brasil - Catálogo de Produtos</title>
+    <meta name="description" content="Power Chip Pro - Aumente a potência do seu carro em até 12% e economize até 20% de combustível. Garantia de 30 dias!">
+    <title>Power Chip Pro - Mais Potência e Economia Para Seu Carro 🚗⚡</title>
+    <link rel="canonical" href="/" />
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="Power Chip Pro - Mais Potência e Economia">
+    <meta property="og:description" content="Aumente a potência em até 12% e economize até 20% no combustível. Instalação simples e 30 dias de garantia.">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="/og-powerchip.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Power Chip Pro - Mais Potência e Economia">
+    <meta name="twitter:description" content="Performance e economia sem alterar a ECU. Garantia total de 30 dias.">
+    <meta name="twitter:image" content="/og-powerchip.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
@@ -12,456 +27,1337 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #E65C00;
+            --secondary: #1A1A1A;
+            --accent: #00D4FF;
+            --success: #00C851;
+            --text: #333333;
+            --text-light: #666666;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            color: var(--white);
+            padding: 80px 20px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        header {
+        .hero-content {
             text-align: center;
-            color: white;
-            padding: 40px 20px;
-            margin-bottom: 40px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        header h1 {
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .stat-number {
             font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 900;
+            color: var(--accent);
+            display: block;
         }
 
-        header p {
-            font-size: 1.2em;
+        .stat-label {
+            font-size: 1.1em;
             opacity: 0.9;
         }
 
-        .products-grid {
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 0, 0.6);
+        }
+
+        .guarantee-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: var(--success);
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 40px;
+            margin-top: 60px;
         }
 
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .benefit-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .product-card:hover {
+        .benefit-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(255, 107, 0, 0.2);
         }
 
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .benefit-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .benefit-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .benefit-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 4em;
+            font-size: 2em;
+            font-weight: 900;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
         }
 
-        .product-info {
-            padding: 25px;
-        }
-
-        .product-name {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #333;
+        .step-title {
+            font-size: 1.3em;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .product-description {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
+        .step-description {
+            color: var(--text-light);
         }
 
-        .product-price {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 20px;
+        /* Comparison Table */
+        .comparison {
+            padding: 80px 20px;
+            background: var(--white);
         }
 
-        .btn-buy {
+        .comparison-table {
+            max-width: 800px;
+            margin: 60px auto;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table table {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-collapse: collapse;
         }
 
-        .btn-buy:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .comparison-table th {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: 700;
         }
 
-        .btn-buy:active {
-            transform: scale(0.98);
-        }
-
-        .btn-buy:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .cart-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cart-title {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
+        .comparison-table td {
+            padding: 20px;
             border-bottom: 1px solid #eee;
+            font-size: 1.1em;
         }
 
-        .cart-item-info {
-            flex: 1;
+        .comparison-table tr:last-child td {
+            border-bottom: none;
         }
 
-        .cart-item-name {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+        .comparison-table .before {
+            color: var(--text-light);
         }
 
-        .cart-item-quantity {
-            color: #666;
+        .comparison-table .after {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Real Example */
+        .real-example {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+
+        .example-card {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 50px;
+            border-radius: 20px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .example-before, .example-after {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+        }
+
+        .example-label {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .example-value {
+            font-size: 2.5em;
+            font-weight: 900;
+            display: block;
+            margin: 10px 0;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .pricing-card {
+            max-width: 500px;
+            margin: 60px auto;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border: 3px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 10px 50px;
+            transform: rotate(45deg);
+            font-weight: 700;
             font-size: 0.9em;
         }
 
-        .cart-item-price {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 1.2em;
+        .price {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .btn-remove {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .btn-remove:hover {
-            background: #ff5252;
-        }
-
-        .cart-total {
-            text-align: right;
+        .price-old {
             font-size: 1.5em;
-            font-weight: bold;
-            color: #333;
-            padding: 20px;
-            border-top: 2px solid #667eea;
+            text-decoration: line-through;
+            color: var(--text-light);
         }
 
-        .btn-checkout {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .price-current {
+            font-size: 4em;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+            margin: 10px 0;
+        }
+
+        .price-installment {
+            font-size: 1.2em;
+            color: var(--text-light);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--success);
+            font-weight: 900;
             font-size: 1.3em;
-            font-weight: bold;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .countdown-title {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-size: 2.5em;
+            font-weight: 900;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
             cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             transition: all 0.3s ease;
         }
 
-        .btn-checkout:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        .faq-question:hover {
+            background: var(--bg-light);
+            color: var(--primary);
         }
 
-        .btn-checkout:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-light);
         }
 
-        .empty-cart {
-            text-align: center;
-            padding: 40px;
-            color: #999;
+        .faq-item.active .faq-answer {
+            padding: 0 30px 25px;
+            max-height: 500px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 3em;
+            color: var(--primary);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .testimonial-vehicle {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .stars {
+            color: #FFD700;
             font-size: 1.2em;
+            margin-bottom: 15px;
         }
 
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #000 100%);
+            color: var(--white);
+            text-align: center;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
         }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1s ease;
         }
 
-        @keyframes slideIn {
+        @keyframes fadeIn {
             from {
-                transform: translateX(400px);
                 opacity: 0;
+                transform: translateY(30px);
             }
             to {
-                transform: translateX(0);
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .notification.success {
-            border-left: 5px solid #51cf66;
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
         }
 
-        .notification.error {
-            border-left: 5px solid #ff6b6b;
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
+
+        /* Quiz Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal {
+            background: var(--white);
+            width: 100%;
+            max-width: 680px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .modal-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #000 100%);
+            color: var(--white);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-title {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .modal-body {
+            padding: 20px 24px 10px;
+        }
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .modal-grid label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+        .modal-grid input, .modal-grid select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+        .modal-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed #eee;
+        }
+        .checks {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .checks label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .modal-footer {
+            padding: 16px 24px 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        .btn {
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background: #eee;
+            color: #333;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(255, 107, 0, 0.3);
+        }
+        .quiz-summary {
+            background: var(--bg-light);
+            border: 1px solid #eee;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        /* Header */
+        .site-header { position: sticky; top: 0; z-index: 999; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
+        .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+        .brand { font-weight: 900; color: var(--secondary); font-size: 1.2em; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Floating CTA on mobile */
+        .floating-cta { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(26,26,26,0.95); color: white; display: none; padding: 12px 16px; z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1); }
+        .floating-cta .inner { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+        .floating-cta .price { font-weight: 900; color: var(--accent); }
+        @media (max-width: 768px) { .floating-cta { display: block; } }
+
+        /* Footer */
+        footer { background: var(--secondary); color: var(--white); padding: 40px 20px; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .footer-col h4 { margin-bottom: 10px; }
+        .footer-col a { color: #ddd; text-decoration: none; display: block; margin: 6px 0; }
+        .footer-col a:hover { color: var(--accent); }
+
+        /* WhatsApp Button */
+        .wa-button {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(37,211,102,0.4);
+            font-weight: 800;
+            z-index: 1001;
+        }
+        .wa-button:hover { filter: brightness(1.05); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>⚡ PowerChip Brasil</h1>
-            <p>Componentes Eletrônicos de Alta Qualidade</p>
-        </header>
+    <!-- Header -->
+    <header class="site-header" role="banner">
+        <nav class="nav" aria-label="Principal">
+            <div class="brand">Powerchip Brasil</div>
+            <div class="nav-links">
+                <a href="#benefits">Benefícios</a>
+                <a href="#how">Como funciona</a>
+                <a href="#pricing">Oferta</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">🔥 OFERTA LIMITADA - 30% OFF</div>
+                <h1>Transforme Seu Carro em uma Máquina de Performance</h1>
+                <p class="hero-subtitle">
+                    Aumente a potência em até 12% e economize até 20% no combustível com o Power Chip Pro
+                </p>
 
-        <div class="products-grid" id="productsGrid">
-            <!-- Produtos serão carregados dinamicamente -->
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">+12%</span>
+                        <span class="stat-label">Mais Potência</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">+12%</span>
+                        <span class="stat-label">Mais Torque</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">-20%</span>
+                        <span class="stat-label">Consumo de Combustível</span>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="scrollToPrice()">
+                    🚀 QUERO MAIS POTÊNCIA AGORA
+                </button>
+
+                <div class="guarantee-badge">
+                    ✅ Garantia de 30 dias - Devolução garantida
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Por Que Escolher o Power Chip Pro?</h2>
+            <p class="section-subtitle scroll-reveal">
+                A tecnologia mais avançada para otimizar o desempenho do seu veículo sem comprometer a mecânica original
+            </p>
+
+            <div class="benefits-grid">
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">⚡</span>
+                    <h3 class="benefit-title">Mais Potência Instantânea</h3>
+                    <p class="benefit-description">
+                        Sinta a diferença já nas primeiras acelerações. Até 12% mais cavalos de potência para ultrapassagens mais seguras e dirigibilidade superior.
+                    </p>
+                </div>
+
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">💰</span>
+                    <h3 class="benefit-title">Economia Real de Combustível</h3>
+                    <p class="benefit-description">
+                        Com mais torque em baixas rotações, seu motor trabalha menos e consome até 20% menos combustível no dia a dia.
+                    </p>
+                </div>
+
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">🔧</span>
+                    <h3 class="benefit-title">Instalação Simples</h3>
+                    <p class="benefit-description">
+                        Você mesmo pode instalar em casa com nosso suporte técnico por telefone. Sem necessidade de mecânico ou reprogramação da ECU.
+                    </p>
+                </div>
+
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">🛡️</span>
+                    <h3 class="benefit-title">100% Reversível</h3>
+                    <p class="benefit-description">
+                        Não modifica permanentemente a central do veículo. Pode ser removido a qualquer momento, restaurando configurações originais.
+                    </p>
+                </div>
+
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">🎯</span>
+                    <h3 class="benefit-title">Compatível com Diversos Veículos</h3>
+                    <p class="benefit-description">
+                        Funciona em carros 1.0, 1.4, 1.6, 1.8 e 2.0. Gasolina, Álcool, Flex e Diesel. Consulte compatibilidade.
+                    </p>
+                </div>
+
+                <div class="benefit-card scroll-reveal">
+                    <span class="benefit-icon">✅</span>
+                    <h3 class="benefit-title">Garantia de Satisfação</h3>
+                    <p class="benefit-description">
+                        30 dias para testar. Não ficou satisfeito? Devolvemos 100% do seu dinheiro sem perguntas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">⚙️ Como Funciona a Tecnologia</h2>
+            <p class="section-subtitle scroll-reveal">
+                O Power Chip Pro é um dispositivo "piggyback" que otimiza os sinais entre sensores e a ECU do veículo
+            </p>
+
+            <div class="steps">
+                <div class="step scroll-reveal">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Intercepta Sinais</h3>
+                    <p class="step-description">
+                        Conecta-se entre o sensor de pressão do coletor e a ECU, interceptando sinais elétricos.
+                    </p>
+                </div>
+
+                <div class="step scroll-reveal">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Otimiza Parâmetros</h3>
+                    <p class="step-description">
+                        Modifica inteligentemente tempo de ignição e injeção de combustível para performance ideal.
+                    </p>
+                </div>
+
+                <div class="step scroll-reveal">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Maximiza Queima</h3>
+                    <p class="step-description">
+                        Otimiza a queima da mistura ar-combustível, gerando mais potência e economia.
+                    </p>
+                </div>
+
+                <div class="step scroll-reveal">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Resultados Imediatos</h3>
+                    <p class="step-description">
+                        Sinta a diferença já na primeira volta. Mais força, resposta e economia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">📊 Ganhos Comprovados</h2>
+            <p class="section-subtitle scroll-reveal">
+                Veja os benefícios que você terá ao instalar o Power Chip Pro
+            </p>
+
+            <div class="comparison-table scroll-reveal">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Benefício</th>
+                            <th>Ganho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aumento de Potência</strong></td>
+                            <td class="after">Até 12%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Aumento de Torque</strong></td>
+                            <td class="after">Até 12%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Economia de Combustível</strong></td>
+                            <td class="after">Até 20%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tempo de Instalação</strong></td>
+                            <td class="after">15-30 minutos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Necessita Reprogramação ECU</strong></td>
+                            <td class="after">❌ Não</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Example -->
+    <section class="real-example">
+        <div class="container">
+            <h2 class="section-title">🏎️ Exemplo Real: Fiat Palio 1.0 2012</h2>
+
+            <div class="example-card">
+                <div class="example-grid">
+                    <div class="example-before">
+                        <div class="example-label">❌ ANTES</div>
+                        <span class="example-value">75 cv</span>
+                        <p>de potência</p>
+                        <span class="example-value">9,9 kgfm</span>
+                        <p>de torque</p>
+                    </div>
+
+                    <div class="example-after">
+                        <div class="example-label">✅ DEPOIS</div>
+                        <span class="example-value">91 cv</span>
+                        <p>de potência</p>
+                        <span class="example-value">11,08 kgfm</span>
+                        <p>de torque</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px; text-align: center; font-size: 1.2em;">
+                    <strong>16 cv a mais</strong> de potência e <strong>1,18 kgfm a mais</strong> de torque!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">💬 O Que Nossos Clientes Dizem</h2>
+            <p class="section-subtitle scroll-reveal">
+                Mais de 15.000 motoristas já transformaram seus carros
+            </p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card scroll-reveal">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">
+                        Meu Gol 1.0 virou outro carro! Agora consigo subir as ladeiras sem forçar e o consumo realmente caiu. Vale muito a pena!
+                    </p>
+                    <p class="testimonial-author">Carlos Silva</p>
+                    <p class="testimonial-vehicle">VW Gol 1.0 2015</p>
+                </div>
+
+                <div class="testimonial-card scroll-reveal">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">
+                        Instalei em 20 minutos com ajuda do suporte. Resultado imediato nas retomadas. Estou impressionado!
+                    </p>
+                    <p class="testimonial-author">Mariana Costa</p>
+                    <p class="testimonial-vehicle">Fiat Uno 1.0 2018</p>
+                </div>
+
+                <div class="testimonial-card scroll-reveal">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">
+                        Estava gastando muito combustível. Depois do chip, o consumo caiu notavelmente. Já se pagou em 2 meses!
+                    </p>
+                    <p class="testimonial-author">Roberto Alves</p>
+                    <p class="testimonial-vehicle">Chevrolet Onix 1.0 2019</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">💎 Oferta Especial Por Tempo Limitado</h2>
+
+            <div class="pricing-card scroll-reveal">
+                <div class="popular-badge">MAIS VENDIDO</div>
+
+                <div class="price">
+                    <div class="price-old">De R$ 697,00</div>
+                    <span class="price-current">R$ 497</span>
+                    <div class="price-installment">ou 12x de R$ 49,70</div>
+                </div>
+
+                <div class="countdown">
+                    <div class="countdown-title">⏰ Oferta termina em:</div>
+                    <div class="countdown-timer" id="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours">00</span>
+                            <span class="countdown-label">Horas</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes">00</span>
+                            <span class="countdown-label">Minutos</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds">00</span>
+                            <span class="countdown-label">Segundos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="features-list">
+                    <li><span class="check-icon">✓</span> Power Chip Pro (dispositivo)</li>
+                    <li><span class="check-icon">✓</span> Suporte técnico para instalação</li>
+                    <li><span class="check-icon">✓</span> Garantia de 30 dias</li>
+                    <li><span class="check-icon">✓</span> Manual de instalação completo</li>
+                    <li><span class="check-icon">✓</span> Frete grátis para todo Brasil</li>
+                    <li><span class="check-icon">✓</span> Atualização gratuita vitalícia</li>
+                </ul>
+
+                <button class="cta-button" onclick="openQuizModal()" style="width: 100%;" aria-label="Comprar agora com desconto">
+                    🔥 COMPRAR AGORA COM 30% OFF
+                </button>
+
+                <p style="text-align: center; margin-top: 20px; color: var(--text-light);">
+                    🔒 Pagamento 100% seguro via Stripe<br>
+                    💳 Cartão, PIX ou Boleto
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">❓ Perguntas Frequentes</h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>É seguro para meu carro?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sim, totalmente seguro! O Power Chip Pro não faz alterações permanentes na ECU do veículo. Ele funciona como um intermediário entre sensores e a central, podendo ser removido a qualquer momento.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Funciona em qualquer carro?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        O Power Chip Pro é compatível com a maioria dos veículos 1.0, 1.4, 1.6, 1.8 e 2.0, movidos a gasolina, álcool, flex ou diesel. Entre em contato conosco para confirmar compatibilidade com seu modelo específico.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como é feita a instalação?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A instalação é simples e pode ser feita por você mesmo em 15-30 minutos. Oferecemos suporte técnico por telefone para guiar você passo a passo durante todo o processo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>E se eu não gostar?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Você tem 30 dias para testar o produto. Se não ficar satisfeito com os resultados, devolvemos 100% do seu dinheiro, sem perguntas ou burocracias.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Perde a garantia de fábrica?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Não! Como o chip não faz modificações permanentes e pode ser removido facilmente, não há impacto na garantia de fábrica. Você pode removê-lo antes de levar o carro à concessionária se preferir.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Quanto tempo leva para receber?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        O prazo de entrega é de 5 a 10 dias úteis para todo o Brasil. Você receberá o código de rastreamento assim que o produto for despachado.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--white); font-size: 3em;">
+                🚀 Pronto Para Transformar Seu Carro?
+            </h2>
+            <p style="font-size: 1.3em; margin: 30px 0; opacity: 0.9;">
+                Junte-se a mais de 15.000 motoristas que já escolheram o Power Chip Pro
+            </p>
+            <button class="cta-button" onclick="scrollToPrice()" style="font-size: 1.5em; padding: 25px 60px;" aria-label="Ver preços e comprar">
+                💰 GARANTIR MINHA OFERTA AGORA
+            </button>
+            <p style="margin-top: 30px; opacity: 0.8;">
+                ✅ Garantia de 30 dias | 🚚 Frete Grátis | 🔒 Pagamento Seguro
+            </p>
+        </div>
+    </section>
+
+        <!-- Floating CTA (mobile) -->
+        <div class="floating-cta" aria-hidden="true">
+                <div class="container inner">
+                        <div>
+                                <div style="font-weight:700">Power Chip Pro</div>
+                                <div class="price">R$ 497</div>
+                        </div>
+                        <button class="cta-button" style="padding:12px 18px" onclick="openQuizModal()">Comprar</button>
+                </div>
         </div>
 
-        <div class="cart-section">
-            <h2 class="cart-title">🛒 Carrinho de Compras</h2>
-            <div id="cartItems" class="cart-items">
-                <div class="empty-cart">Seu carrinho está vazio</div>
+        <!-- WhatsApp Support Button (configured via /config/site) -->
+        <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener" style="display:none" aria-label="Falar no WhatsApp">
+            <span>💬 Suporte</span>
+        </a>
+
+        <!-- Structured Data: Product -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Power Chip Pro",
+            "brand": {"@type": "Brand", "name": "Powerchip Brasil"},
+            "description": "Dispositivo piggyback que aumenta potência e torque e reduz consumo em diversos veículos.",
+            "sku": "PCP-001",
+            "image": ["/og-powerchip.png"],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "15000"
+            },
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "BRL",
+                "price": "497.00",
+                "availability": "https://schema.org/InStock"
+            }
+        }
+        </script>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="quizTitle">Responda 30 segundos de Quiz para personalizar sua compra 🚗⚡</div>
+                <button class="btn btn-secondary" onclick="closeQuizModal()" aria-label="Fechar">✕</button>
             </div>
-            <div id="cartTotal" style="display: none;" class="cart-total">
-                Total: <span id="totalAmount">R$ 0,00</span>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div>
+                        <label for="quizBrand">Marca do veículo</label>
+                        <input id="quizBrand" placeholder="Ex.: Fiat, Volkswagen, Chevrolet">
+                    </div>
+                    <div>
+                        <label for="quizYear">Ano do veículo</label>
+                        <input id="quizYear" type="number" min="1980" max="2030" placeholder="Ex.: 2018">
+                    </div>
+                    <div>
+                        <label for="quizPower">Potência do motor (cv)</label>
+                        <input id="quizPower" type="number" min="40" max="500" placeholder="Ex.: 75">
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="modal-section">
+                    <div style="font-weight: 700; margin-bottom: 8px;">O que você mais busca?</div>
+                    <div class="checks">
+                        <label><input type="checkbox" id="prefTorque"> Mais torque</label>
+                        <label><input type="checkbox" id="prefThrottle"> Resposta imediata do acelerador</label>
+                        <label><input type="checkbox" id="prefLag"> Diminuir o lag de respostas</label>
+                    </div>
+                    <div id="quizSummary" class="quiz-summary" style="display:none"></div>
+                </div>
             </div>
-            <button id="checkoutBtn" class="btn-checkout" style="display: none;">
-                Finalizar Compra com Stripe
-            </button>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeQuizModal()">Voltar</button>
+                <button id="quizContinueBtn" class="btn btn-primary" onclick="submitQuizAndCheckout(event)">Continuar para pagamento</button>
+            </div>
         </div>
     </div>
-
     <script>
-        // Configuração do Stripe
-        const stripe = Stripe('pk_test_51SQV5FJyKZz0Hfc5OmvJUjQ8Z7yDK58AFgIFX6VIvzO0RuVmyJdmttBzH0AlxCer29ZqfVDCyPrhXpqqkPKnIDVC00Z8HPsIHg');
-
-        // Produtos do catálogo
-        const products = [
-            {
-                id: 'prod_1',
-                name: 'Arduino Uno R3',
-                description: 'Placa microcontroladora baseada no ATmega328P, ideal para projetos de eletrônica e robótica.',
-                price: 8900, // em centavos
-                currency: 'BRL',
-                icon: '🎛️'
-            },
-            {
-                id: 'prod_2',
-                name: 'Raspberry Pi 4 - 4GB',
-                description: 'Computador de placa única com 4GB de RAM, perfeito para projetos IoT e servidores domésticos.',
-                price: 45000,
-                currency: 'BRL',
-                icon: '🖥️'
-            },
-            {
-                id: 'prod_3',
-                name: 'ESP32 DevKit',
-                description: 'Módulo WiFi e Bluetooth com microcontrolador dual-core, ideal para IoT.',
-                price: 4500,
-                currency: 'BRL',
-                icon: '📡'
-            },
-            {
-                id: 'prod_4',
-                name: 'Kit Sensores Arduino',
-                description: 'Kit com 37 sensores diversos para projetos com Arduino e microcontroladores.',
-                price: 12500,
-                currency: 'BRL',
-                icon: '🔬'
-            },
-            {
-                id: 'prod_5',
-                name: 'Display OLED 0.96"',
-                description: 'Display OLED I2C de alta qualidade, perfeito para visualização de dados.',
-                price: 2900,
-                currency: 'BRL',
-                icon: '📺'
-            },
-            {
-                id: 'prod_6',
-                name: 'Fonte Ajustável 30V 10A',
-                description: 'Fonte de alimentação ajustável profissional com display digital.',
-                price: 28000,
-                currency: 'BRL',
-                icon: '🔌'
+        // Configuração Stripe (obtém chave pública do servidor)
+        let stripeInstance = null;
+        async function initStripe() {
+            if (stripeInstance) return stripeInstance;
+            try {
+                const cfg = await fetch('/config/publishable-key').then(r => r.json());
+                if (!cfg.publishableKey) throw new Error('Chave pública do Stripe não configurada.');
+                stripeInstance = Stripe(cfg.publishableKey);
+                return stripeInstance;
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível inicializar o pagamento. Tente novamente mais tarde.');
+                throw e;
             }
-        ];
-
-        // Carrinho de compras
-        let cart = [];
-
-        // Formatar preço
-        function formatPrice(cents) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(cents / 100);
         }
 
-        // Mostrar notificação
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-
-        // Renderizar produtos
-        function renderProducts() {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="product-image">${product.icon}</div>
-                    <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-description">${product.description}</div>
-                        <div class="product-price">${formatPrice(product.price)}</div>
-                        <button class="btn-buy" onclick="addToCart('${product.id}')">
-                            Adicionar ao Carrinho
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Adicionar ao carrinho
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
+        // Site config (analytics + WhatsApp)
+        async function initSiteConfig() {
+            try {
+                const cfg = await fetch('/config/site').then(r => r.json());
+                if (cfg.whatsapp) {
+                    const wa = document.getElementById('waButton');
+                    wa.href = `https://wa.me/${cfg.whatsapp.replace(/\D/g,'')}`;
+                    wa.style.display = 'flex';
+                }
+                if (cfg.ga4Id) injectGA4(cfg.ga4Id);
+                if (cfg.metaPixelId) injectMetaPixel(cfg.metaPixelId);
+            } catch (e) {
+                console.warn('Site config não carregada:', e.message);
             }
-
-            updateCart();
-            showNotification(`${product.name} adicionado ao carrinho!`);
         }
 
-        // Remover do carrinho
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-            showNotification('Item removido do carrinho', 'error');
+        function injectGA4(id) {
+            const s1 = document.createElement('script');
+            s1.async = true;
+            s1.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+            document.head.appendChild(s1);
+            const s2 = document.createElement('script');
+            s2.innerHTML = `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${id}');`;
+            document.head.appendChild(s2);
         }
 
-        // Atualizar carrinho
-        function updateCart() {
-            const cartItemsDiv = document.getElementById('cartItems');
-            const cartTotalDiv = document.getElementById('cartTotal');
-            const totalAmountSpan = document.getElementById('totalAmount');
-            const checkoutBtn = document.getElementById('checkoutBtn');
-
-            if (cart.length === 0) {
-                cartItemsDiv.innerHTML = '<div class="empty-cart">Seu carrinho está vazio</div>';
-                cartTotalDiv.style.display = 'none';
-                checkoutBtn.style.display = 'none';
-                return;
-            }
-
-            cartItemsDiv.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.icon} ${item.name}</div>
-                        <div class="cart-item-quantity">Quantidade: ${item.quantity}</div>
-                    </div>
-                    <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
-                    <button class="btn-remove" onclick="removeFromCart('${item.id}')">Remover</button>
-                </div>
-            `).join('');
-
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            totalAmountSpan.textContent = formatPrice(total);
-            cartTotalDiv.style.display = 'block';
-            checkoutBtn.style.display = 'block';
+        function injectMetaPixel(id) {
+            const s = document.createElement('script');
+            s.innerHTML = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;\n n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;\n t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',\n 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init','${id}'); fbq('track','PageView');`;
+            document.head.appendChild(s);
+            const nos = document.createElement('noscript');
+            nos.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1"/>`;
+            document.body.appendChild(nos);
         }
 
-        // Checkout com Stripe
-        async function checkout() {
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            checkoutBtn.disabled = true;
-            checkoutBtn.innerHTML = '<span class="loading"></span> Processando...';
+        // Produto Power Chip Pro
+        const powerChipProduct = {
+            id: 'powerchip_pro',
+            name: 'Power Chip Pro',
+            description: 'Dispositivo para aumento de potência e economia de combustível',
+            price: 49700, // R$ 497,00 em centavos
+            currency: 'BRL',
+            quantity: 1
+        };
+
+        // Checkout
+        async function checkout(quiz, buttonOverride) {
+            const button = buttonOverride || (typeof event !== 'undefined' ? event.target : null) || document.getElementById('quizContinueBtn');
+            button.disabled = true;
+            button.innerHTML = '⏳ Processando...';
 
             try {
+                const stripe = await initStripe();
                 const response = await fetch('/create-checkout-session', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ items: cart })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: [powerChipProduct],
+                        quiz: quiz || undefined
+                    })
                 });
 
                 const session = await response.json();
@@ -470,7 +1366,6 @@
                     throw new Error(session.error);
                 }
 
-                // Redirecionar para o Stripe Checkout
                 const result = await stripe.redirectToCheckout({
                     sessionId: session.id
                 });
@@ -480,17 +1375,190 @@
                 }
             } catch (error) {
                 console.error('Erro:', error);
-                showNotification('Erro ao processar pagamento: ' + error.message, 'error');
-                checkoutBtn.disabled = false;
-                checkoutBtn.textContent = 'Finalizar Compra com Stripe';
+                alert('Erro ao processar pagamento. Tente novamente.');
+                if (button) {
+                    button.disabled = false;
+                    button.innerHTML = 'Continuar para pagamento';
+                }
             }
         }
 
-        // Event listeners
-        document.getElementById('checkoutBtn').addEventListener('click', checkout);
+        // Quiz helpers
+        function openQuizModal() {
+            const modal = document.getElementById('quizModal');
+            modal.style.display = 'flex';
+            // Prefill summary
+            updateQuizSummary();
+        }
 
-        // Inicializar
-        renderProducts();
+        function closeQuizModal() {
+            const modal = document.getElementById('quizModal');
+            modal.style.display = 'none';
+        }
+
+        function collectQuizData() {
+            const brand = document.getElementById('quizBrand').value.trim();
+            const year = document.getElementById('quizYear').value.trim();
+            const enginePowerHp = document.getElementById('quizPower').value.trim();
+            const moreTorque = document.getElementById('prefTorque').checked;
+            const throttleResponse = document.getElementById('prefThrottle').checked;
+            const reduceLag = document.getElementById('prefLag').checked;
+            return {
+                brand,
+                year,
+                enginePowerHp: enginePowerHp ? Number(enginePowerHp) : undefined,
+                moreTorque,
+                throttleResponse,
+                reduceLag
+            };
+        }
+
+        function updateQuizSummary() {
+            const q = collectQuizData();
+            const out = [];
+            if (q.brand || q.year) out.push(`Compatível com seu ${q.brand || 'veículo'} ${q.year || ''}.`);
+            if (q.enginePowerHp) {
+                if (q.enginePowerHp <= 80) out.push('Melhora sensível em saídas e subidas no dia a dia.');
+                else if (q.enginePowerHp <= 120) out.push('Retomadas mais fortes e ultrapassagens mais seguras.');
+                else out.push('Aprimora resposta e entrega contínua de potência.');
+            }
+            if (q.moreTorque) out.push('Foco em ganho de torque para força em baixas rotações.');
+            if (q.throttleResponse) out.push('Resposta do acelerador mais imediata.');
+            if (q.reduceLag) out.push('Redução do “lag” na aceleração.');
+
+            const summary = document.getElementById('quizSummary');
+            if (out.length) {
+                summary.style.display = 'block';
+                summary.textContent = out.join(' ');
+            } else {
+                summary.style.display = 'none';
+                summary.textContent = '';
+            }
+        }
+
+        // Bind changes to update summary (attach immediately)
+        ['quizBrand','quizYear','quizPower','prefTorque','prefThrottle','prefLag']
+            .forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', updateQuizSummary);
+                if (el) el.addEventListener('change', updateQuizSummary);
+            });
+
+        async function submitQuizAndCheckout(e) {
+            const btn = e.target;
+            const q = collectQuizData();
+            // Validação mínima
+            if (!q.brand || !q.year || !q.enginePowerHp) {
+                alert('Informe marca, ano e potência do motor para continuar.');
+                return;
+            }
+            try { localStorage.setItem('powerchip_quiz_prefill', JSON.stringify(q)); } catch (_) {}
+            btn.disabled = true;
+            btn.textContent = '⏳ Processando...';
+            try {
+                await checkout(q, btn);
+            } finally {
+                // Se der erro, o próprio checkout reverte os textos
+            }
+        }
+
+        // Scroll suave para preço
+        function scrollToPrice() {
+            document.getElementById('pricing').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Countdown Timer
+        function startCountdown() {
+            const endTime = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 horas
+
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                const hours = Math.floor(distance / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    startCountdown(); // Reinicia
+                }
+            }, 1000);
+        }
+
+        // Toggle FAQ
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+
+            // Fecha todos
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+            // Abre o clicado se não estava ativo
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Prefill helpers
+        function setQuizFields(q) {
+            if (!q) return;
+            const m = {
+                quizBrand: q.brand || '',
+                quizYear: q.year || '',
+                quizPower: q.enginePowerHp || ''
+            };
+            Object.entries(m).forEach(([id,val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+            const checks = {
+                prefTorque: !!q.moreTorque,
+                prefThrottle: !!q.throttleResponse,
+                prefLag: !!q.reduceLag
+            };
+            Object.entries(checks).forEach(([id,val]) => { const el = document.getElementById(id); if (el) el.checked = val; });
+        }
+
+        // Event Listeners
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', async () => {
+            startCountdown();
+            revealOnScroll();
+            await initSiteConfig();
+
+            // Open quiz prefilled if returning from cancel
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('resume') === '1') {
+                try {
+                    const saved = localStorage.getItem('powerchip_quiz_prefill');
+                    if (saved) {
+                        const q = JSON.parse(saved);
+                        openQuizModal();
+                        setQuizFields(q);
+                        updateQuizSummary();
+                    }
+                } catch (_) {}
+            }
+        });
     </script>
 </body>
 </html>

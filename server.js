@@ -68,6 +68,15 @@ app.get('/config/publishable-key', (req, res) => {
     res.json({ publishableKey: pk });
 });
 
+// Site config: analytics and support channels
+app.get('/config/site', (req, res) => {
+    res.json({
+        whatsapp: process.env.WHATSAPP_PHONE || '',
+        ga4Id: process.env.GA4_ID || '',
+        metaPixelId: process.env.META_PIXEL_ID || ''
+    });
+});
+
 // Endpoint para criar sessão de checkout
 app.post('/create-checkout-session', async (req, res) => {
     try {
@@ -210,13 +219,17 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     res.json({ received: true });
 });
 
-// Rota principal - Landing Page Power Chip Pro
+// Rota principal - agora servindo index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'powerchip-pro.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Rota para catálogo completo
+// Rota para catálogo completo (fallback para index-old.html se existir)
 app.get('/catalogo', (req, res) => {
+    const legacy = path.join(__dirname, 'index-old.html');
+    if (fs.existsSync(legacy)) {
+        return res.sendFile(legacy);
+    }
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 

@@ -771,6 +771,25 @@
         .footer-col h4 { margin-bottom: 10px; }
         .footer-col a { color: #ddd; text-decoration: none; display: block; margin: 6px 0; }
         .footer-col a:hover { color: var(--accent); }
+
+        /* WhatsApp Button */
+        .wa-button {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(37,211,102,0.4);
+            font-weight: 800;
+            z-index: 1001;
+        }
+        .wa-button:hover { filter: brightness(1.05); }
     </style>
 </head>
 <body>
@@ -1193,6 +1212,11 @@
                 </div>
         </div>
 
+        <!-- WhatsApp Support Button (configured via /config/site) -->
+        <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener" style="display:none" aria-label="Falar no WhatsApp">
+            <span>💬 Suporte</span>
+        </a>
+
         <!-- Structured Data: Product -->
         <script type="application/ld+json">
         {
@@ -1272,6 +1296,41 @@
                 alert('Não foi possível inicializar o pagamento. Tente novamente mais tarde.');
                 throw e;
             }
+        }
+
+        // Site config (analytics + WhatsApp)
+        async function initSiteConfig() {
+            try {
+                const cfg = await fetch('/config/site').then(r => r.json());
+                if (cfg.whatsapp) {
+                    const wa = document.getElementById('waButton');
+                    wa.href = `https://wa.me/${cfg.whatsapp.replace(/\D/g,'')}`;
+                    wa.style.display = 'flex';
+                }
+                if (cfg.ga4Id) injectGA4(cfg.ga4Id);
+                if (cfg.metaPixelId) injectMetaPixel(cfg.metaPixelId);
+            } catch (e) {
+                console.warn('Site config não carregada:', e.message);
+            }
+        }
+
+        function injectGA4(id) {
+            const s1 = document.createElement('script');
+            s1.async = true;
+            s1.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+            document.head.appendChild(s1);
+            const s2 = document.createElement('script');
+            s2.innerHTML = `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${id}');`;
+            document.head.appendChild(s2);
+        }
+
+        function injectMetaPixel(id) {
+            const s = document.createElement('script');
+            s.innerHTML = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;\n n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;\n t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',\n 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init','${id}'); fbq('track','PageView');`;
+            document.head.appendChild(s);
+            const nos = document.createElement('noscript');
+            nos.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1"/>`;
+            document.body.appendChild(nos);
         }
 
         // Produto Power Chip Pro
@@ -1393,6 +1452,7 @@
                 alert('Informe marca, ano e potência do motor para continuar.');
                 return;
             }
+            try { localStorage.setItem('powerchip_quiz_prefill', JSON.stringify(q)); } catch (_) {}
             btn.disabled = true;
             btn.textContent = '⏳ Processando...';
             try {
@@ -1461,11 +1521,43 @@
             });
         }
 
+        // Prefill helpers
+        function setQuizFields(q) {
+            if (!q) return;
+            const m = {
+                quizBrand: q.brand || '',
+                quizYear: q.year || '',
+                quizPower: q.enginePowerHp || ''
+            };
+            Object.entries(m).forEach(([id,val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+            const checks = {
+                prefTorque: !!q.moreTorque,
+                prefThrottle: !!q.throttleResponse,
+                prefLag: !!q.reduceLag
+            };
+            Object.entries(checks).forEach(([id,val]) => { const el = document.getElementById(id); if (el) el.checked = val; });
+        }
+
         // Event Listeners
         window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
             startCountdown();
             revealOnScroll();
+            await initSiteConfig();
+
+            // Open quiz prefilled if returning from cancel
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('resume') === '1') {
+                try {
+                    const saved = localStorage.getItem('powerchip_quiz_prefill');
+                    if (saved) {
+                        const q = JSON.parse(saved);
+                        openQuizModal();
+                        setQuizFields(q);
+                        updateQuizSummary();
+                    }
+                } catch (_) {}
+            }
         });
     </script>
 </body>

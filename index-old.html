@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Powerchip Brasil - Catálogo de produtos e componentes eletrônicos com pagamento seguro via Stripe.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="/catalogo" />
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Powerchip Brasil - Catálogo de Produtos">
+    <meta property="og:description" content="Encontre componentes eletrônicos e soluções de performance com pagamento seguro.">
+    <meta property="og:url" content="/catalogo">
+    <meta property="og:image" content="/og-powerchip.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Powerchip Brasil - Catálogo de Produtos">
+    <meta name="twitter:description" content="Venda online com checkout Stripe e suporte via WhatsApp.">
+    <meta name="twitter:image" content="/og-powerchip.png">
+    <title>Powerchip Brasil - Catálogo de Produtos</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4em;
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .btn-buy {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-buy:active {
+            transform: scale(0.98);
+        }
+
+        .btn-buy:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .cart-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cart-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-quantity {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .btn-remove {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .btn-remove:hover {
+            background: #ff5252;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            padding: 20px;
+            border-top: 2px solid #667eea;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-checkout:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-checkout:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.2em;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            border-left: 5px solid #51cf66;
+        }
+
+        .notification.error {
+            border-left: 5px solid #ff6b6b;
+        }
+
+        /* Header (sticky) */
+        .site-header { position: sticky; top: 0; z-index: 999; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
+        .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+        .brand { font-weight: 900; color: #333; font-size: 1.2em; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: #333; text-decoration: none; font-weight: 600; }
+        .nav-links a:hover { color: #667eea; }
+
+        /* WhatsApp Button */
+        .wa-button {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(37,211,102,0.4);
+            font-weight: 800;
+            z-index: 1001;
+        }
+        .wa-button:hover { filter: brightness(1.05); }
+
+        /* Floating CTA (mobile) */
+        .floating-cta { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(26,26,26,0.95); color: white; display: none; padding: 12px 16px; z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1); }
+        .floating-cta .inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+        .floating-cta .label { font-weight:700 }
+        .floating-cta .price { font-weight: 900; color: #00D4FF; }
+        @media (max-width: 768px) { .floating-cta { display: block; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header" role="banner">
+        <nav class="nav" aria-label="Principal">
+            <div class="brand">Powerchip Brasil</div>
+            <div class="nav-links">
+                <a href="/">Início</a>
+                <a href="#">Catálogo</a>
+                <a href="#cartSection">Carrinho</a>
+                <a href="/#faq">FAQ</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <header>
+            <h1>⚡ PowerChip Brasil</h1>
+            <p>Componentes Eletrônicos de Alta Qualidade</p>
+        </header>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Produtos serão carregados dinamicamente -->
+        </div>
+
+        <div id="cartSection" class="cart-section">
+            <h2 class="cart-title">🛒 Carrinho de Compras</h2>
+            <div id="cartItems" class="cart-items">
+                <div class="empty-cart">Seu carrinho está vazio</div>
+            </div>
+            <div id="cartTotal" style="display: none;" class="cart-total">
+                Total: <span id="totalAmount">R$ 0,00</span>
+            </div>
+            <button id="checkoutBtn" class="btn-checkout" style="display: none;">
+                Finalizar Compra com Stripe
+            </button>
+        </div>
+    </div>
+
+    <!-- WhatsApp Support Button (configured via /config/site) -->
+    <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener" style="display:none" aria-label="Falar no WhatsApp">
+        <span>💬 Suporte</span>
+    </a>
+
+    <!-- Floating CTA (mobile) -->
+    <div class="floating-cta" style="display:none" aria-hidden="true">
+        <div class="inner">
+            <div>
+                <div class="label">Carrinho</div>
+                <div class="price" id="floatingTotal">R$ 0,00</div>
+            </div>
+            <button class="btn-buy" style="width:auto" onclick="checkout()">Finalizar</button>
+        </div>
+    </div>
+
+    <script>
+        // Stripe (init via server config)
+        let stripeInstance = null;
+        async function initStripe() {
+            if (stripeInstance) return stripeInstance;
+            try {
+                const cfg = await fetch('/config/publishable-key').then(r => r.json());
+                if (!cfg.publishableKey) throw new Error('Chave pública do Stripe não configurada.');
+                stripeInstance = Stripe(cfg.publishableKey);
+                return stripeInstance;
+            } catch (e) {
+                console.error(e);
+                showNotification('Não foi possível inicializar o pagamento. Tente novamente mais tarde.', 'error');
+                throw e;
+            }
+        }
+
+        // Site config (analytics + WhatsApp)
+        async function initSiteConfig() {
+            try {
+                const cfg = await fetch('/config/site').then(r => r.json());
+                if (cfg.whatsapp) {
+                    const wa = document.getElementById('waButton');
+                    wa.href = `https://wa.me/${cfg.whatsapp.replace(/\D/g,'')}`;
+                    wa.style.display = 'flex';
+                }
+                if (cfg.ga4Id) injectGA4(cfg.ga4Id);
+                if (cfg.metaPixelId) injectMetaPixel(cfg.metaPixelId);
+            } catch (e) {
+                console.warn('Site config não carregada:', e.message);
+            }
+        }
+
+        function injectGA4(id) {
+            const s1 = document.createElement('script');
+            s1.async = true;
+            s1.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+            document.head.appendChild(s1);
+            const s2 = document.createElement('script');
+            s2.innerHTML = `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${id}');`;
+            document.head.appendChild(s2);
+        }
+
+        function injectMetaPixel(id) {
+            const s = document.createElement('script');
+            s.innerHTML = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;\n n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;\n t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',\n 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init','${id}'); fbq('track','PageView');`;
+            document.head.appendChild(s);
+            const nos = document.createElement('noscript');
+            nos.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1"/>`;
+            document.body.appendChild(nos);
+        }
+
+        // Produtos do catálogo
+        const products = [
+            {
+                id: 'prod_1',
+                name: 'Arduino Uno R3',
+                description: 'Placa microcontroladora baseada no ATmega328P, ideal para projetos de eletrônica e robótica.',
+                price: 8900, // em centavos
+                currency: 'BRL',
+                icon: '🎛️'
+            },
+            {
+                id: 'prod_2',
+                name: 'Raspberry Pi 4 - 4GB',
+                description: 'Computador de placa única com 4GB de RAM, perfeito para projetos IoT e servidores domésticos.',
+                price: 45000,
+                currency: 'BRL',
+                icon: '🖥️'
+            },
+            {
+                id: 'prod_3',
+                name: 'ESP32 DevKit',
+                description: 'Módulo WiFi e Bluetooth com microcontrolador dual-core, ideal para IoT.',
+                price: 4500,
+                currency: 'BRL',
+                icon: '📡'
+            },
+            {
+                id: 'prod_4',
+                name: 'Kit Sensores Arduino',
+                description: 'Kit com 37 sensores diversos para projetos com Arduino e microcontroladores.',
+                price: 12500,
+                currency: 'BRL',
+                icon: '🔬'
+            },
+            {
+                id: 'prod_5',
+                name: 'Display OLED 0.96"',
+                description: 'Display OLED I2C de alta qualidade, perfeito para visualização de dados.',
+                price: 2900,
+                currency: 'BRL',
+                icon: '📺'
+            },
+            {
+                id: 'prod_6',
+                name: 'Fonte Ajustável 30V 10A',
+                description: 'Fonte de alimentação ajustável profissional com display digital.',
+                price: 28000,
+                currency: 'BRL',
+                icon: '🔌'
+            }
+        ];
+
+        // Carrinho de compras
+        let cart = [];
+
+        // Formatar preço
+        function formatPrice(cents) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(cents / 100);
+        }
+
+        // Mostrar notificação
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Renderizar produtos
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">${product.icon}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">${formatPrice(product.price)}</div>
+                        <button class="btn-buy" onclick="addToCart('${product.id}')">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Adicionar ao carrinho
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCart();
+            showNotification(`${product.name} adicionado ao carrinho!`);
+        }
+
+        // Remover do carrinho
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+            showNotification('Item removido do carrinho', 'error');
+        }
+
+        // Atualizar carrinho
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+            const totalAmountSpan = document.getElementById('totalAmount');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const floatingCta = document.querySelector('.floating-cta');
+            const floatingTotal = document.getElementById('floatingTotal');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="empty-cart">Seu carrinho está vazio</div>';
+                cartTotalDiv.style.display = 'none';
+                checkoutBtn.style.display = 'none';
+                if (floatingCta) floatingCta.style.display = 'none';
+                return;
+            }
+
+            cartItemsDiv.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.icon} ${item.name}</div>
+                        <div class="cart-item-quantity">Quantidade: ${item.quantity}</div>
+                    </div>
+                    <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
+                    <button class="btn-remove" onclick="removeFromCart('${item.id}')">Remover</button>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalAmountSpan.textContent = formatPrice(total);
+            cartTotalDiv.style.display = 'block';
+            checkoutBtn.style.display = 'block';
+
+            // Update mobile floating CTA
+            if (floatingCta && floatingTotal) {
+                floatingTotal.textContent = formatPrice(total);
+                floatingCta.style.display = (window.innerWidth <= 768) ? 'block' : 'none';
+            }
+        }
+
+        // Checkout com Stripe
+        async function checkout() {
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerHTML = '<span class="loading"></span> Processando...';
+
+            try {
+                const stripe = await initStripe();
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ items: cart })
+                });
+
+                const session = await response.json();
+
+                if (session.error) {
+                    throw new Error(session.error);
+                }
+
+                // Redirecionar para o Stripe Checkout
+                const result = await stripe.redirectToCheckout({
+                    sessionId: session.id
+                });
+
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('Erro ao processar pagamento: ' + error.message, 'error');
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = 'Finalizar Compra com Stripe';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('checkoutBtn').addEventListener('click', checkout);
+
+        // Inicializar
+        renderProducts();
+        window.addEventListener('load', initSiteConfig);
+        window.addEventListener('resize', () => {
+            // Keep floating CTA visibility consistent on resize
+            const floatingCta = document.querySelector('.floating-cta');
+            if (!floatingCta) return;
+            if (cart.length && window.innerWidth <= 768) floatingCta.style.display = 'block';
+            else floatingCta.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
