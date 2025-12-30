@@ -157,8 +157,8 @@ app.post('/create-checkout-session', async (req, res) => {
             payment_method_types: ['card'], // Apenas cartão (PIX e Boleto requerem ativação no Dashboard)
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${req.headers.origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${req.headers.origin}/cancel.html`,
+            success_url: `${req.headers.origin}/pages/success.html?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${req.headers.origin}/pages/cancel.html`,
             locale: 'pt-BR',
             billing_address_collection: 'required',
             shipping_address_collection: {
