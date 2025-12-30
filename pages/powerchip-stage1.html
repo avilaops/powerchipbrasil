@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Power Chip EcoFuel - Economia de combustível sem perder desempenho. Economize até 20% de combustível mantendo a potência.">
-    <title>Power Chip EcoFuel - Máxima Economia de Combustível 💰⛽</title>
-    <link rel="canonical" href="/powerchip-ecofuel.html" />
+    <meta name="description" content="Power Chip Pro Stage 1 - Ganho de potência otimizado para veículos de rua. Até 12% mais potência e 20% economia de combustível.">
+    <title>Power Chip Pro Stage 1 - Performance Otimizada 🚗⚡</title>
+    <link rel="canonical" href="/powerchip-stage1.html" />
     <meta property="og:type" content="product">
-    <meta property="og:title" content="Power Chip EcoFuel - Economia Inteligente">
-    <meta property="og:description" content="Economize até 20% no combustível sem perder desempenho. Instalação simples e 30 dias de garantia.">
-    <meta property="og:image" content="/5(1).png">
+    <meta property="og:title" content="Power Chip Pro Stage 1 - Performance para Veículos de Rua">
+    <meta property="og:description" content="Ganho de potência otimizado para uso diário. Instalação simples e 30 dias de garantia.">
+    <meta property="og:image" content="/PRO-1.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
-    <link rel="preload" as="image" href="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png">
-    <link rel="preload" as="image" href="5(1).png">
-    <script src="config.js"></script>
-    <script src="image-optimizer.js" defer></script>
+    <link rel="preload" as="image" href="../assets/images/chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png">
+    <link rel="preload" as="image" href="../assets/images/PRO-1.png">
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/image-optimizer.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
@@ -27,8 +27,8 @@
         }
 
         :root {
-            --primary: #00C851;
-            --primary-dark: #00A144;
+            --primary: #FF6B00;
+            --primary-dark: #E65C00;
             --secondary: #1A1A1A;
             --accent: #00D4FF;
             --success: #00C851;
@@ -45,6 +45,7 @@
             overflow-x: hidden;
         }
 
+        /* Header */
         .site-header {
             position: sticky;
             top: 0;
@@ -177,7 +178,7 @@
 
         .badge {
             display: inline-block;
-            background: #FFD700;
+            background: var(--accent);
             color: var(--secondary);
             padding: 8px 20px;
             border-radius: 50px;
@@ -191,17 +192,21 @@
             font-weight: 900;
             margin-bottom: 20px;
             line-height: 1.2;
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .product-description {
             font-size: 1.3em;
             margin-bottom: 30px;
             line-height: 1.6;
-            color: rgba(255,255,255,0.95);
+            color: rgba(255,255,255,0.9);
         }
 
         .price-section {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
@@ -217,33 +222,14 @@
         .current-price {
             font-size: 3.5em;
             font-weight: 900;
-            color: #FFD700;
+            color: var(--accent);
             display: block;
             margin: 10px 0;
         }
 
         .installments {
             font-size: 1.2em;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .economy-highlight {
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px solid #FFD700;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .economy-highlight h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #FFD700;
-        }
-
-        .economy-highlight p {
-            font-size: 1.2em;
+            color: rgba(255,255,255,0.8);
         }
 
         .cta-button {
@@ -258,7 +244,7 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 200, 81, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
             text-decoration: none;
             text-align: center;
             margin: 20px 0;
@@ -266,7 +252,7 @@
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 200, 81, 0.6);
+            box-shadow: 0 15px 40px rgba(255, 107, 0, 0.6);
         }
 
         .features-list {
@@ -285,14 +271,13 @@
 
         .features-list li::before {
             content: '✓';
-            color: #FFD700;
+            color: var(--success);
             font-weight: 900;
             font-size: 1.5em;
         }
 
         .guarantee {
-            background: #FFD700;
-            color: var(--secondary);
+            background: var(--success);
             padding: 20px;
             border-radius: 15px;
             text-align: center;
@@ -300,27 +285,10 @@
             margin-top: 20px;
         }
 
+        /* Stats Section */
         .stats-section {
             padding: 80px 20px;
             background: var(--white);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5em;
-            font-weight: 900;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            color: var(--text-light);
-            margin-bottom: 60px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .stats-grid {
@@ -361,9 +329,28 @@
             margin-top: 10px;
         }
 
+        /* Benefits Grid */
         .benefits-section {
             padding: 80px 20px;
             background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .benefits-grid {
@@ -402,65 +389,7 @@
             line-height: 1.8;
         }
 
-        .calculator-section {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-        }
-
-        .calculator-card {
-            max-width: 600px;
-            margin: 40px auto;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .calculator-input {
-            margin: 20px 0;
-        }
-
-        .calculator-input label {
-            display: block;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .calculator-input input,
-        .calculator-input select {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.9);
-            color: var(--secondary);
-        }
-
-        .calculator-result {
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px solid #FFD700;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .calculator-result h3 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: #FFD700;
-        }
-
-        .calculator-result .savings {
-            font-size: 3em;
-            font-weight: 900;
-            color: #FFD700;
-        }
-
+        /* Technical Specs */
         .specs-section {
             padding: 80px 20px;
             background: var(--white);
@@ -493,94 +422,79 @@
             font-size: 1.1em;
         }
 
-        .comparison-section {
+        /* Gallery Section */
+        .gallery-section {
             padding: 80px 20px;
             background: var(--bg-light);
         }
 
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            max-width: 900px;
-            margin: 40px auto;
-        }
-
-        .comparison-card {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .comparison-card h3 {
-            font-size: 1.8em;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .comparison-card.before h3 {
-            color: #DC3545;
-        }
-
-        .comparison-card.after h3 {
-            color: var(--primary);
-        }
-
-        .comparison-item {
-            padding: 15px 0;
-            border-bottom: 1px solid var(--bg-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .comparison-item:last-child {
-            border-bottom: none;
-        }
-
-        .testimonials-section {
-            padding: 80px 20px;
-            background: var(--white);
-        }
-
-        .testimonials-grid {
+        .full-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 20px;
             margin-top: 40px;
         }
 
-        .testimonial-card {
-            background: var(--bg-light);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        .gallery-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
         }
 
-        .testimonial-rating {
-            color: #FFD700;
-            font-size: 1.5em;
-            margin-bottom: 15px;
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
 
-        .testimonial-text {
-            font-style: italic;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            color: var(--text);
+        .gallery-item img {
+            width: 100%;
+            display: block;
         }
 
-        .testimonial-author {
+        /* Installation Section */
+        .installation-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .installation-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .installation-step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 900;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.3em;
             font-weight: 700;
-            color: var(--secondary);
+            margin-bottom: 10px;
         }
 
-        .testimonial-car {
+        .step-description {
             color: var(--text-light);
-            font-size: 0.9em;
         }
 
+        /* FAQ Section */
         .faq-section {
             padding: 80px 20px;
             background: var(--bg-light);
@@ -639,6 +553,50 @@
             transition: transform 0.3s;
         }
 
+        /* Testimonials */
+        .testimonials-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-rating {
+            color: #FFD700;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .testimonial-car {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* CTA Final */
         .cta-final {
             padding: 100px 20px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -658,6 +616,7 @@
             opacity: 0.9;
         }
 
+        /* Footer */
         .footer {
             background: var(--secondary);
             color: var(--white);
@@ -683,9 +642,9 @@
             color: var(--accent);
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            .product-grid,
-            .comparison-grid {
+            .product-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -703,6 +662,7 @@
             }
         }
 
+        /* Scroll Reveal */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -716,257 +676,173 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="site-header">
         <nav class="nav">
-            <a href="index.html" class="brand" style="display: flex; align-items: center; gap: 10px;">
-                <img src="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png" alt="Powerchip Brasil" style="height: 45px;">
+            <a href="../index.html" class="brand" style="display: flex; align-items: center; gap: 10px;">
+                <img src="../assets/images/chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png" alt="Powerchip Brasil" style="height: 45px;">
             </a>
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#produtos">Produtos</a>
+                <a href="../index.html">Home</a>
+                <a href="../index.html#produtos">Produtos</a>
                 <a href="index.html#beneficios">Benefícios</a>
                 <a href="#faq">FAQ</a>
             </div>
         </nav>
     </header>
 
+    <!-- Hero Product Section -->
     <section class="hero-product">
         <div class="container">
             <div class="product-grid">
                 <div class="product-images">
-                    <img src="5(1).png" alt="Power Chip EcoFuel" class="main-image" id="mainImage" width="500" height="500" decoding="async">
+                    <img src="../assets/images/PRO-1.png" alt="Power Chip Pro Stage 1" class="main-image" id="mainImage" width="500" height="500" decoding="async">
                     <div class="image-gallery">
-                        <img src="5(1).png" alt="Vista 1" class="gallery-thumb" onclick="changeImage('5(1).png')" width="120" height="120" loading="lazy" decoding="async">
-                        <img src="6(1).png" alt="Vista 2" class="gallery-thumb" onclick="changeImage('6(1).png')" width="120" height="120" loading="lazy" decoding="async">
-                        <img src="7(1).png" alt="Vista 3" class="gallery-thumb" onclick="changeImage('7(1).png')" width="120" height="120" loading="lazy" decoding="async">
-                        <img src="8(1).png" alt="Vista 4" class="gallery-thumb" onclick="changeImage('8(1).png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="../assets/images/PRO-1.png" alt="Vista 1" class="gallery-thumb" onclick="changeImage('../assets/images/PRO-1.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="../assets/images/PRO-2.png" alt="Vista 2" class="gallery-thumb" onclick="changeImage('../assets/images/PRO-2.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="../assets/images/PRO-3.png" alt="Vista 3" class="gallery-thumb" onclick="changeImage('../assets/images/PRO-3.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="../assets/images/PRO-4.png" alt="Vista 4" class="gallery-thumb" onclick="changeImage('../assets/images/PRO-4.png')" width="120" height="120" loading="lazy" decoding="async">
                     </div>
                 </div>
 
                 <div class="product-info">
-                    <span class="badge">💰 MÁXIMA ECONOMIA</span>
-                    <h1>Power Chip EcoFuel</h1>
+                    <span class="badge">🔥 MAIS VENDIDO</span>
+                    <h1>Power Chip Pro Stage 1</h1>
                     <p class="product-description">
-                        Economize até 20% no combustível sem perder desempenho! Calibração inteligente que otimiza o consumo mantendo a potência do seu veículo.
+                        O módulo de performance perfeito para o uso diário! Ganho de potência otimizado sem perder a dirigibilidade e conforto do seu veículo.
                     </p>
 
-                    <div class="economy-highlight">
-                        <h3>💵 Economia Real</h3>
-                        <p>Em média <strong>R$ 150-300/mês</strong> de economia!</p>
-                    </div>
-
                     <ul class="features-list">
+                        <li>Até 12% de aumento de potência</li>
                         <li>Economia de até 20% no combustível</li>
-                        <li>Mantém a potência original</li>
-                        <li>Otimizado para veículos flex</li>
-                        <li>Calibração inteligente por IA</li>
-                        <li>Instalação plug-and-play</li>
-                        <li>Não altera a ECU</li>
-                        <li>Compatível com etanol e gasolina</li>
-                        <li>ROI em menos de 3 meses</li>
+                        <li>Otimizado para veículos de rua</li>
+                        <li>Instalação plug-and-play em 5 minutos</li>
+                        <li>Não altera a ECU original</li>
+                        <li>Compatível com garantia de fábrica</li>
+                        <li>Resposta imediata do acelerador</li>
+                        <li>Torque aprimorado em baixas rotações</li>
                     </ul>
 
                     <div class="price-section">
-                        <span class="old-price">De R$ 1.299,00</span>
-                        <span class="current-price">R$ 999,00</span>
-                        <p class="installments">ou 12x de R$ 83,25 sem juros</p>
+                        <span class="old-price">De R$ 1.499,00</span>
+                        <span class="current-price">R$ 1.299,00</span>
+                        <p class="installments">ou 12x de R$ 108,25 sem juros</p>
                     </div>
 
                     <button class="cta-button" onclick="checkout()">
-                        🛒 COMPRAR AGORA E ECONOMIZAR
+                        🛒 COMPRAR AGORA COM GARANTIA
                     </button>
 
                     <div class="guarantee">
-                        ✓ 30 DIAS DE GARANTIA - Se economizar!
+                        ✓ 30 DIAS DE GARANTIA TOTAL - Devolva se não gostar!
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Stats Section -->
     <section class="stats-section scroll-reveal">
         <div class="container">
-            <h2 class="section-title">Economia Comprovada</h2>
+            <h2 class="section-title">Resultados Comprovados</h2>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">⛽</div>
-                    <span class="stat-number">20%</span>
-                    <p class="stat-label">Menos Combustível</p>
+                    <div class="stat-icon">⚡</div>
+                    <span class="stat-number">+12%</span>
+                    <p class="stat-label">Potência Extra</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">💰</div>
-                    <span class="stat-number">R$ 200</span>
-                    <p class="stat-label">Economia Mensal Média</p>
+                    <span class="stat-number">20%</span>
+                    <p class="stat-label">Economia de Combustível</p>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <span class="stat-number">3 meses</span>
-                    <p class="stat-label">Retorno do Investimento</p>
+                    <div class="stat-icon">⏱️</div>
+                    <span class="stat-number">5min</span>
+                    <p class="stat-label">Tempo de Instalação</p>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🌱</div>
-                    <span class="stat-number">-15%</span>
-                    <p class="stat-label">Emissões de CO₂</p>
+                    <div class="stat-icon">🎯</div>
+                    <span class="stat-number">100%</span>
+                    <p class="stat-label">Reversível</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="calculator-section scroll-reveal" id="calculadora">
-        <div class="container">
-            <h2 class="section-title">Calcule Sua Economia</h2>
-            <p class="section-subtitle">Veja quanto você pode economizar por mês</p>
-
-            <div class="calculator-card">
-                <div class="calculator-input">
-                    <label for="kmMonth">Quantos km você roda por mês?</label>
-                    <input type="number" id="kmMonth" value="1000" min="100" step="100" onchange="calculateSavings()">
-                </div>
-
-                <div class="calculator-input">
-                    <label for="consumption">Consumo médio atual (km/L):</label>
-                    <input type="number" id="consumption" value="10" min="5" max="20" step="0.5" onchange="calculateSavings()">
-                </div>
-
-                <div class="calculator-input">
-                    <label for="fuelPrice">Preço do combustível (R$/L):</label>
-                    <input type="number" id="fuelPrice" value="5.50" min="3" max="10" step="0.10" onchange="calculateSavings()">
-                </div>
-
-                <div class="calculator-result" id="result">
-                    <h3>Economia Mensal Estimada:</h3>
-                    <div class="savings">R$ <span id="monthlySavings">110</span></div>
-                    <p style="margin-top: 20px;">Em 12 meses: <strong>R$ <span id="yearlySavings">1320</span></strong></p>
-                    <p>Investimento se paga em: <strong><span id="payback">5</span> meses</strong></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Benefits Section -->
     <section class="benefits-section scroll-reveal" id="beneficios">
         <div class="container">
-            <h2 class="section-title">Por Que Escolher o EcoFuel?</h2>
-            <p class="section-subtitle">Economia inteligente sem comprometer o desempenho</p>
+            <h2 class="section-title">Por Que Escolher o Stage 1?</h2>
+            <p class="section-subtitle">O equilíbrio perfeito entre performance e confiabilidade para uso diário</p>
 
             <div class="benefits-grid">
                 <div class="benefit-card">
-                    <div class="benefit-icon">💰</div>
-                    <h3 class="benefit-title">Economia Real</h3>
+                    <div class="benefit-icon">🚗</div>
+                    <h3 class="benefit-title">Otimizado Para Rua</h3>
                     <p class="benefit-description">
-                        Até 20% de redução no consumo de combustível. Em média, nossos clientes economizam R$ 150-300 por mês!
+                        Calibração específica para uso urbano e estrada. Mantém o conforto e a dirigibilidade original do veículo.
                     </p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🎯</div>
-                    <h3 class="benefit-title">Mantém Performance</h3>
+                    <div class="benefit-icon">💪</div>
+                    <h3 class="benefit-title">Mais Torque</h3>
                     <p class="benefit-description">
-                        Otimização inteligente que economiza sem perder potência. Seu carro continua respondendo como antes.
+                        Ganho significativo de torque em baixas e médias rotações para ultrapassagens mais seguras e subidas sem esforço.
                     </p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🤖</div>
-                    <h3 class="benefit-title">IA Adaptativa</h3>
+                    <div class="benefit-icon">⚙️</div>
+                    <h3 class="benefit-title">Instalação Simples</h3>
                     <p class="benefit-description">
-                        Algoritmo inteligente que se adapta ao seu estilo de condução e otimiza automaticamente.
+                        Sistema plug-and-play que conecta direto nos sensores. Não precisa de conhecimento técnico ou ferramentas especiais.
                     </p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🌱</div>
-                    <h3 class="benefit-title">Eco-Friendly</h3>
+                    <div class="benefit-icon">🔄</div>
+                    <h3 class="benefit-title">Totalmente Reversível</h3>
                     <p class="benefit-description">
-                        Reduz emissões de CO₂ em até 15%. Economize dinheiro e ajude o meio ambiente!
+                        Remova quando quiser sem deixar rastros. Perfeito para manter a garantia de fábrica do seu veículo.
                     </p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">⚡</div>
-                    <h3 class="benefit-title">Flex Total</h3>
+                    <div class="benefit-icon">🛡️</div>
+                    <h3 class="benefit-title">Proteção Inteligente</h3>
                     <p class="benefit-description">
-                        Otimizado especialmente para veículos flex. Funciona perfeitamente com etanol, gasolina ou mistura.
+                        Sistema de proteção que monitora temperatura e pressão, protegendo o motor contra situações extremas.
                     </p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">📈</div>
-                    <h3 class="benefit-title">ROI Rápido</h3>
+                    <div class="benefit-icon">📊</div>
+                    <h3 class="benefit-title">Testado e Aprovado</h3>
                     <p class="benefit-description">
-                        Investimento se paga sozinho em 3-5 meses. Depois disso, é economia pura no seu bolso!
+                        Milhares de clientes satisfeitos. Testado em bancada de potência com resultados comprovados.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="comparison-section scroll-reveal">
-        <div class="container">
-            <h2 class="section-title">Antes vs Depois</h2>
-            <p class="section-subtitle">Veja a diferença real no consumo</p>
-
-            <div class="comparison-grid">
-                <div class="comparison-card before">
-                    <h3>❌ Sem EcoFuel</h3>
-                    <div class="comparison-item">
-                        <span>Consumo médio</span>
-                        <strong>10 km/L</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Gasto mensal (1000km)</span>
-                        <strong>R$ 550</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Gasto anual</span>
-                        <strong>R$ 6.600</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Emissões CO₂</span>
-                        <strong>Alto</strong>
-                    </div>
-                </div>
-
-                <div class="comparison-card after">
-                    <h3>✅ Com EcoFuel</h3>
-                    <div class="comparison-item">
-                        <span>Consumo médio</span>
-                        <strong>12 km/L</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Gasto mensal (1000km)</span>
-                        <strong>R$ 458</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Gasto anual</span>
-                        <strong>R$ 5.500</strong>
-                    </div>
-                    <div class="comparison-item">
-                        <span>Emissões CO₂</span>
-                        <strong>-15%</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 40px; font-size: 1.5em; color: var(--primary); font-weight: 700;">
-                💰 Economia de R$ 1.100 por ano!
-            </div>
-        </div>
-    </section>
-
-    <section class="specs-section scroll-reveal">
+    <!-- Technical Specs -->
+    <section class="specs-section scroll-reveal" id="especificacoes">
         <div class="container">
             <h2 class="section-title">Especificações Técnicas</h2>
             <div class="specs-grid">
                 <div class="spec-item">
                     <div class="spec-label">🔌 Compatibilidade</div>
-                    <div class="spec-value">Veículos flex, gasolina e diesel com injeção eletrônica</div>
+                    <div class="spec-value">Todos os veículos flex, gasolina e diesel com injeção eletrônica</div>
                 </div>
                 <div class="spec-item">
                     <div class="spec-label">📦 Dimensões</div>
-                    <div class="spec-value">75mm x 45mm x 18mm</div>
+                    <div class="spec-value">80mm x 50mm x 20mm</div>
                 </div>
                 <div class="spec-item">
                     <div class="spec-label">⚡ Voltagem</div>
                     <div class="spec-value">12V / 24V (automático)</div>
                 </div>
                 <div class="spec-item">
-                    <div class="spec-label">🤖 Processador</div>
-                    <div class="spec-value">MCU 32-bit com IA adaptativa</div>
+                    <div class="spec-label">🌡️ Temperatura</div>
+                    <div class="spec-value">-40°C a +125°C</div>
                 </div>
                 <div class="spec-item">
                     <div class="spec-label">💧 Proteção</div>
@@ -974,46 +850,109 @@
                 </div>
                 <div class="spec-item">
                     <div class="spec-label">📋 Garantia</div>
-                    <div class="spec-value">30 dias + 1 ano contra defeitos</div>
+                    <div class="spec-value">30 dias satisfação garantida</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section class="gallery-section scroll-reveal" id="galeria">
+        <div class="container">
+            <h2 class="section-title">Galeria de Imagens</h2>
+            <p class="section-subtitle">Veja todos os detalhes do Power Chip Pro Stage 1</p>
+
+            <div class="full-gallery">
+                <div class="gallery-item">
+                    <img src="PRO-1.png" alt="Power Chip Stage 1 - Vista 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="PRO-2.png" alt="Power Chip Stage 1 - Vista 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="PRO-3.png" alt="Power Chip Stage 1 - Vista 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="PRO-4.png" alt="Power Chip Stage 1 - Vista 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="PRO-5.png" alt="Power Chip Stage 1 - Vista 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="PRO-6.png" alt="Power Chip Stage 1 - Vista 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation -->
+    <section class="installation-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Instalação em 3 Passos</h2>
+            <p class="section-subtitle">Tão simples que você mesmo faz em casa</p>
+
+            <div class="installation-steps">
+                <div class="installation-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Localize os Sensores</h3>
+                    <p class="step-description">
+                        Encontre os sensores de pressão e temperatura do coletor de admissão (manual incluso com fotos).
+                    </p>
+                </div>
+                <div class="installation-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Conecte o Módulo</h3>
+                    <p class="step-description">
+                        Conecte os cabos nos sensores seguindo o código de cores. Sistema plug-and-play, encaixa perfeitamente.
+                    </p>
+                </div>
+                <div class="installation-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Ligue e Dirija</h3>
+                    <p class="step-description">
+                        Ligue o carro e sinta a diferença imediatamente. O módulo se autoconfigura em poucos segundos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
     <section class="testimonials-section scroll-reveal" id="depoimentos">
         <div class="container">
-            <h2 class="section-title">Clientes Economizando</h2>
-            <p class="section-subtitle">Veja o que quem já está economizando tem a dizer</p>
+            <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
+            <p class="section-subtitle">Mais de 10.000 clientes satisfeitos em todo o Brasil</p>
 
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-rating">★★★★★</div>
                     <p class="testimonial-text">
-                        "Meu Onix passou de 11 km/L para 13,5 km/L! Estou economizando mais de R$ 200 por mês. O investimento se pagou em 4 meses!"
+                        "Instalei no meu HB20 e a diferença foi impressionante! O carro ficou muito mais esperto nas retomadas e ainda economizei combustível."
                     </p>
-                    <p class="testimonial-author">Mariana Santos</p>
-                    <p class="testimonial-car">Chevrolet Onix 1.0 Flex</p>
+                    <p class="testimonial-author">Carlos Eduardo</p>
+                    <p class="testimonial-car">Hyundai HB20 1.6</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-rating">★★★★★</div>
                     <p class="testimonial-text">
-                        "Uso muito etanol e a economia foi impressionante. Passou de 8 para 9,8 km/L. Em um ano já economizei mais de R$ 1.500!"
+                        "Comprei para minha Hilux diesel e superou minhas expectativas. A força em baixa rotação melhorou muito e a economia também."
                     </p>
-                    <p class="testimonial-author">José Carlos</p>
-                    <p class="testimonial-car">Fiat Argo 1.3 Flex</p>
+                    <p class="testimonial-author">Roberto Silva</p>
+                    <p class="testimonial-car">Toyota Hilux 2.8 Diesel</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-rating">★★★★★</div>
                     <p class="testimonial-text">
-                        "Comprei pensando na economia, mas o carro também ficou mais gostoso de dirigir. Recomendo demais, vale cada centavo!"
+                        "Melhor custo-benefício! Instalei sozinho em menos de 10 minutos e o carro ficou completamente diferente. Vale cada centavo!"
                     </p>
-                    <p class="testimonial-author">Fernanda Lima</p>
-                    <p class="testimonial-car">VW Polo 1.6 MSI Flex</p>
+                    <p class="testimonial-author">Amanda Costa</p>
+                    <p class="testimonial-car">Chevrolet Onix 1.0 Turbo</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FAQ -->
     <section class="faq-section scroll-reveal">
         <div class="container">
             <h2 class="section-title">Perguntas Frequentes</h2>
@@ -1021,65 +960,76 @@
             <div class="faq-list">
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        Realmente economiza 20% de combustível?
+                        O Power Chip funciona em qualquer carro?
                     </div>
                     <div class="faq-answer">
-                        Sim! A economia varia entre 15% e 20% dependendo do veículo, estilo de condução e tipo de trajeto. Em média, nossos clientes reportam economia de 18% no consumo.
+                        Sim! O Stage 1 é compatível com todos os veículos que possuem injeção eletrônica (flex, gasolina ou diesel). Funciona em carros, motos, picapes e SUVs.
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        O carro perde potência?
+                        A instalação é realmente simples?
                     </div>
                     <div class="faq-answer">
-                        Não! O EcoFuel usa algoritmo inteligente que otimiza o consumo sem comprometer a potência. Você continua tendo toda a força do motor quando precisar.
+                        Absolutamente! O sistema é plug-and-play. Você só precisa localizar os sensores (manual com fotos incluído) e conectar os cabos. Leva menos de 10 minutos e não precisa de ferramentas especiais.
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        Funciona com etanol?
+                        Perco a garantia do carro?
                     </div>
                     <div class="faq-answer">
-                        Sim! O EcoFuel é especialmente otimizado para veículos flex. Funciona perfeitamente com etanol, gasolina ou qualquer mistura dos dois.
+                        Não! O módulo é totalmente reversível e não deixa rastros. Se precisar ir à concessionária, basta remover o módulo temporariamente. Ele não altera a ECU original do veículo.
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        Em quanto tempo recupero o investimento?
+                        Pode danificar o motor?
                     </div>
                     <div class="faq-answer">
-                        Em média, entre 3 e 5 meses dependendo da sua quilometragem mensal. Quanto mais você roda, mais rápido se paga e mais você economiza.
+                        Não! O Power Chip possui sistema de proteção inteligente que monitora temperatura e pressão. Se detectar qualquer anomalia, retorna automaticamente aos valores de fábrica, protegendo seu motor.
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        É diferente do Stage 1?
+                        Qual é a garantia?
                     </div>
                     <div class="faq-answer">
-                        Sim! Enquanto o Stage 1 foca em performance com economia, o EcoFuel é calibrado especificamente para máxima economia de combustível, ideal para quem roda muito e quer reduzir custos.
+                        Oferecemos 30 dias de garantia total de satisfação. Se não gostar dos resultados, devolvemos 100% do seu dinheiro sem perguntas. Além disso, o produto tem garantia de 1 ano contra defeitos de fabricação.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Qual a diferença do Stage 1 para os outros modelos?
+                    </div>
+                    <div class="faq-answer">
+                        O Stage 1 é otimizado para uso diário, oferecendo o melhor equilíbrio entre performance e conforto. É ideal para quem usa o carro no dia a dia e quer mais potência sem perder dirigibilidade.
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Final -->
     <section class="cta-final">
         <div class="container">
-            <h2>Comece a Economizar Hoje!</h2>
-            <p>Investimento que se paga sozinho em poucos meses</p>
+            <h2>Pronto Para Transformar Seu Carro?</h2>
+            <p>Junte-se a mais de 10.000 clientes satisfeitos em todo o Brasil</p>
             <button class="cta-button" onclick="checkout()" style="max-width: 500px; margin: 0 auto;">
-                🛒 COMPRAR AGORA - R$ 999,00
+                🛒 COMPRAR AGORA - R$ 1.299,00
             </button>
             <div class="guarantee" style="max-width: 500px; margin: 20px auto;">
-                ✓ 30 Dias de Garantia - Economize ou devolvemos!
+                ✓ Garantia de 30 dias - Risco zero!
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
@@ -1094,6 +1044,7 @@
     </footer>
 
     <script>
+        // Stripe & Checkout
         let stripe, clientSecret;
 
         async function initSiteConfig() {
@@ -1110,9 +1061,10 @@
                 return;
             }
 
+            // Product data for Stage 1
             const productData = {
-                productName: 'Power Chip EcoFuel',
-                priceInCents: 99900,
+                productName: 'Power Chip Pro Stage 1',
+                priceInCents: 129900,
                 ...quizData
             };
 
@@ -1145,34 +1097,12 @@
             }
         }
 
-        function calculateSavings() {
-            const kmMonth = parseFloat(document.getElementById('kmMonth').value) || 1000;
-            const consumption = parseFloat(document.getElementById('consumption').value) || 10;
-            const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 5.50;
-
-            // Cálculo sem chip
-            const litersMonth = kmMonth / consumption;
-            const costMonth = litersMonth * fuelPrice;
-
-            // Cálculo com chip (20% economia)
-            const newConsumption = consumption * 1.2;
-            const newLitersMonth = kmMonth / newConsumption;
-            const newCostMonth = newLitersMonth * fuelPrice;
-
-            // Economia
-            const monthlySavings = Math.round(costMonth - newCostMonth);
-            const yearlySavings = monthlySavings * 12;
-            const payback = Math.ceil(999 / monthlySavings);
-
-            document.getElementById('monthlySavings').textContent = monthlySavings;
-            document.getElementById('yearlySavings').textContent = yearlySavings;
-            document.getElementById('payback').textContent = payback;
-        }
-
+        // Change main image
         function changeImage(src) {
             document.getElementById('mainImage').src = src;
         }
 
+        // Toggle FAQ
         function toggleFaq(element) {
             const item = element.parentElement;
             const isActive = item.classList.contains('active');
@@ -1180,6 +1110,7 @@
             if (!isActive) item.classList.add('active');
         }
 
+        // Scroll Reveal
         function revealOnScroll() {
             const reveals = document.querySelectorAll('.scroll-reveal');
             reveals.forEach(element => {
@@ -1196,7 +1127,6 @@
         window.addEventListener('load', () => {
             initSiteConfig();
             revealOnScroll();
-            calculateSavings();
         });
     </script>
 </body>
