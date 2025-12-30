@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Power Chip EcoFuel - Economia de combustível sem perder desempenho. Economize até 20% de combustível mantendo a potência.">
+    <title>Power Chip EcoFuel - Máxima Economia de Combustível 💰⛽</title>
+    <link rel="canonical" href="/powerchip-ecofuel.html" />
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="Power Chip EcoFuel - Economia Inteligente">
+    <meta property="og:description" content="Economize até 20% no combustível sem perder desempenho. Instalação simples e 30 dias de garantia.">
+    <meta property="og:image" content="/5(1).png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="config.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00C851;
+            --primary-dark: #00A144;
+            --secondary: #1A1A1A;
+            --accent: #00D4FF;
+            --success: #00C851;
+            --text: #333333;
+            --text-light: #666666;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--secondary);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero-product {
+            background: linear-gradient(135deg, #0A4D29 0%, #00C851 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .product-images {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery-thumb {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .gallery-thumb:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #FFD700;
+            color: var(--secondary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .product-description {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.95);
+        }
+
+        .price-section {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: rgba(255,255,255,0.5);
+            font-size: 1.5em;
+        }
+
+        .current-price {
+            font-size: 3.5em;
+            font-weight: 900;
+            color: #FFD700;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .installments {
+            font-size: 1.2em;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .economy-highlight {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .economy-highlight h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .economy-highlight p {
+            font-size: 1.2em;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 25px;
+            font-size: 1.5em;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 200, 81, 0.4);
+            text-decoration: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 200, 81, 0.6);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: #FFD700;
+            font-weight: 900;
+            font-size: 1.5em;
+        }
+
+        .guarantee {
+            background: #FFD700;
+            color: var(--secondary);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .stats-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        .benefits-section {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border: 2px solid var(--primary);
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .benefit-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .calculator-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+
+        .calculator-card {
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .calculator-input {
+            margin: 20px 0;
+        }
+
+        .calculator-input label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            color: var(--secondary);
+        }
+
+        .calculator-result {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .calculator-result h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .calculator-result .savings {
+            font-size: 3em;
+            font-weight: 900;
+            color: #FFD700;
+        }
+
+        .specs-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .spec-item {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .spec-value {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .comparison-section {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .comparison-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .comparison-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .comparison-card.before h3 {
+            color: #DC3545;
+        }
+
+        .comparison-card.after h3 {
+            color: var(--primary);
+        }
+
+        .comparison-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--bg-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .testimonials-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-rating {
+            color: #FFD700;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .testimonial-car {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .faq-section {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-question::after {
+            content: '▼';
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+
+        .cta-final {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-final h2 {
+            font-size: 3em;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .cta-final p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .footer {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .product-grid,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .current-price {
+                font-size: 2.5em;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html">
+                <img src="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png" alt="Power Chip Brasil" class="logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="#beneficios">Benefícios</a>
+                <a href="#calculadora">Calculadora</a>
+                <a href="#depoimentos">Depoimentos</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-product">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-images">
+                    <img src="5(1).png" alt="Power Chip EcoFuel" class="main-image" id="mainImage">
+                    <div class="image-gallery">
+                        <img src="5(1).png" alt="Vista 1" class="gallery-thumb" onclick="changeImage('5(1).png')">
+                        <img src="6(1).png" alt="Vista 2" class="gallery-thumb" onclick="changeImage('6(1).png')">
+                        <img src="7(1).png" alt="Vista 3" class="gallery-thumb" onclick="changeImage('7(1).png')">
+                        <img src="8(1).png" alt="Vista 4" class="gallery-thumb" onclick="changeImage('8(1).png')">
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <span class="badge">💰 MÁXIMA ECONOMIA</span>
+                    <h1>Power Chip EcoFuel</h1>
+                    <p class="product-description">
+                        Economize até 20% no combustível sem perder desempenho! Calibração inteligente que otimiza o consumo mantendo a potência do seu veículo.
+                    </p>
+
+                    <div class="economy-highlight">
+                        <h3>💵 Economia Real</h3>
+                        <p>Em média <strong>R$ 150-300/mês</strong> de economia!</p>
+                    </div>
+
+                    <ul class="features-list">
+                        <li>Economia de até 20% no combustível</li>
+                        <li>Mantém a potência original</li>
+                        <li>Otimizado para veículos flex</li>
+                        <li>Calibração inteligente por IA</li>
+                        <li>Instalação plug-and-play</li>
+                        <li>Não altera a ECU</li>
+                        <li>Compatível com etanol e gasolina</li>
+                        <li>ROI em menos de 3 meses</li>
+                    </ul>
+
+                    <div class="price-section">
+                        <span class="old-price">De R$ 1.299,00</span>
+                        <span class="current-price">R$ 999,00</span>
+                        <p class="installments">ou 12x de R$ 83,25 sem juros</p>
+                    </div>
+
+                    <button class="cta-button" onclick="checkout()">
+                        🛒 COMPRAR AGORA E ECONOMIZAR
+                    </button>
+
+                    <div class="guarantee">
+                        ✓ 30 DIAS DE GARANTIA - Se economizar!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Economia Comprovada</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⛽</div>
+                    <span class="stat-number">20%</span>
+                    <p class="stat-label">Menos Combustível</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <span class="stat-number">R$ 200</span>
+                    <p class="stat-label">Economia Mensal Média</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <span class="stat-number">3 meses</span>
+                    <p class="stat-label">Retorno do Investimento</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌱</div>
+                    <span class="stat-number">-15%</span>
+                    <p class="stat-label">Emissões de CO₂</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculator-section scroll-reveal" id="calculadora">
+        <div class="container">
+            <h2 class="section-title">Calcule Sua Economia</h2>
+            <p class="section-subtitle">Veja quanto você pode economizar por mês</p>
+
+            <div class="calculator-card">
+                <div class="calculator-input">
+                    <label for="kmMonth">Quantos km você roda por mês?</label>
+                    <input type="number" id="kmMonth" value="1000" min="100" step="100" onchange="calculateSavings()">
+                </div>
+
+                <div class="calculator-input">
+                    <label for="consumption">Consumo médio atual (km/L):</label>
+                    <input type="number" id="consumption" value="10" min="5" max="20" step="0.5" onchange="calculateSavings()">
+                </div>
+
+                <div class="calculator-input">
+                    <label for="fuelPrice">Preço do combustível (R$/L):</label>
+                    <input type="number" id="fuelPrice" value="5.50" min="3" max="10" step="0.10" onchange="calculateSavings()">
+                </div>
+
+                <div class="calculator-result" id="result">
+                    <h3>Economia Mensal Estimada:</h3>
+                    <div class="savings">R$ <span id="monthlySavings">110</span></div>
+                    <p style="margin-top: 20px;">Em 12 meses: <strong>R$ <span id="yearlySavings">1320</span></strong></p>
+                    <p>Investimento se paga em: <strong><span id="payback">5</span> meses</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section scroll-reveal" id="beneficios">
+        <div class="container">
+            <h2 class="section-title">Por Que Escolher o EcoFuel?</h2>
+            <p class="section-subtitle">Economia inteligente sem comprometer o desempenho</p>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3 class="benefit-title">Economia Real</h3>
+                    <p class="benefit-description">
+                        Até 20% de redução no consumo de combustível. Em média, nossos clientes economizam R$ 150-300 por mês!
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">Mantém Performance</h3>
+                    <p class="benefit-description">
+                        Otimização inteligente que economiza sem perder potência. Seu carro continua respondendo como antes.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤖</div>
+                    <h3 class="benefit-title">IA Adaptativa</h3>
+                    <p class="benefit-description">
+                        Algoritmo inteligente que se adapta ao seu estilo de condução e otimiza automaticamente.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌱</div>
+                    <h3 class="benefit-title">Eco-Friendly</h3>
+                    <p class="benefit-description">
+                        Reduz emissões de CO₂ em até 15%. Economize dinheiro e ajude o meio ambiente!
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">Flex Total</h3>
+                    <p class="benefit-description">
+                        Otimizado especialmente para veículos flex. Funciona perfeitamente com etanol, gasolina ou mistura.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3 class="benefit-title">ROI Rápido</h3>
+                    <p class="benefit-description">
+                        Investimento se paga sozinho em 3-5 meses. Depois disso, é economia pura no seu bolso!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Antes vs Depois</h2>
+            <p class="section-subtitle">Veja a diferença real no consumo</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card before">
+                    <h3>❌ Sem EcoFuel</h3>
+                    <div class="comparison-item">
+                        <span>Consumo médio</span>
+                        <strong>10 km/L</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Gasto mensal (1000km)</span>
+                        <strong>R$ 550</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Gasto anual</span>
+                        <strong>R$ 6.600</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Emissões CO₂</span>
+                        <strong>Alto</strong>
+                    </div>
+                </div>
+
+                <div class="comparison-card after">
+                    <h3>✅ Com EcoFuel</h3>
+                    <div class="comparison-item">
+                        <span>Consumo médio</span>
+                        <strong>12 km/L</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Gasto mensal (1000km)</span>
+                        <strong>R$ 458</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Gasto anual</span>
+                        <strong>R$ 5.500</strong>
+                    </div>
+                    <div class="comparison-item">
+                        <span>Emissões CO₂</span>
+                        <strong>-15%</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; font-size: 1.5em; color: var(--primary); font-weight: 700;">
+                💰 Economia de R$ 1.100 por ano!
+            </div>
+        </div>
+    </section>
+
+    <section class="specs-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Especificações Técnicas</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-label">🔌 Compatibilidade</div>
+                    <div class="spec-value">Veículos flex, gasolina e diesel com injeção eletrônica</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">📦 Dimensões</div>
+                    <div class="spec-value">75mm x 45mm x 18mm</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">⚡ Voltagem</div>
+                    <div class="spec-value">12V / 24V (automático)</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">🤖 Processador</div>
+                    <div class="spec-value">MCU 32-bit com IA adaptativa</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">💧 Proteção</div>
+                    <div class="spec-value">IP67 (à prova d'água)</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">📋 Garantia</div>
+                    <div class="spec-value">30 dias + 1 ano contra defeitos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section scroll-reveal" id="depoimentos">
+        <div class="container">
+            <h2 class="section-title">Clientes Economizando</h2>
+            <p class="section-subtitle">Veja o que quem já está economizando tem a dizer</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Meu Onix passou de 11 km/L para 13,5 km/L! Estou economizando mais de R$ 200 por mês. O investimento se pagou em 4 meses!"
+                    </p>
+                    <p class="testimonial-author">Mariana Santos</p>
+                    <p class="testimonial-car">Chevrolet Onix 1.0 Flex</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Uso muito etanol e a economia foi impressionante. Passou de 8 para 9,8 km/L. Em um ano já economizei mais de R$ 1.500!"
+                    </p>
+                    <p class="testimonial-author">José Carlos</p>
+                    <p class="testimonial-car">Fiat Argo 1.3 Flex</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Comprei pensando na economia, mas o carro também ficou mais gostoso de dirigir. Recomendo demais, vale cada centavo!"
+                    </p>
+                    <p class="testimonial-author">Fernanda Lima</p>
+                    <p class="testimonial-car">VW Polo 1.6 MSI Flex</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Realmente economiza 20% de combustível?
+                    </div>
+                    <div class="faq-answer">
+                        Sim! A economia varia entre 15% e 20% dependendo do veículo, estilo de condução e tipo de trajeto. Em média, nossos clientes reportam economia de 18% no consumo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        O carro perde potência?
+                    </div>
+                    <div class="faq-answer">
+                        Não! O EcoFuel usa algoritmo inteligente que otimiza o consumo sem comprometer a potência. Você continua tendo toda a força do motor quando precisar.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Funciona com etanol?
+                    </div>
+                    <div class="faq-answer">
+                        Sim! O EcoFuel é especialmente otimizado para veículos flex. Funciona perfeitamente com etanol, gasolina ou qualquer mistura dos dois.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Em quanto tempo recupero o investimento?
+                    </div>
+                    <div class="faq-answer">
+                        Em média, entre 3 e 5 meses dependendo da sua quilometragem mensal. Quanto mais você roda, mais rápido se paga e mais você economiza.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        É diferente do Stage 1?
+                    </div>
+                    <div class="faq-answer">
+                        Sim! Enquanto o Stage 1 foca em performance com economia, o EcoFuel é calibrado especificamente para máxima economia de combustível, ideal para quem roda muito e quer reduzir custos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-final">
+        <div class="container">
+            <h2>Comece a Economizar Hoje!</h2>
+            <p>Investimento que se paga sozinho em poucos meses</p>
+            <button class="cta-button" onclick="checkout()" style="max-width: 500px; margin: 0 auto;">
+                🛒 COMPRAR AGORA - R$ 999,00
+            </button>
+            <div class="guarantee" style="max-width: 500px; margin: 20px auto;">
+                ✓ 30 Dias de Garantia - Economize ou devolvemos!
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Início</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+                <a href="#">Termos</a>
+                <a href="#">Privacidade</a>
+            </div>
+            <p>&copy; 2025 Power Chip Brasil. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        let stripe, clientSecret;
+
+        async function initSiteConfig() {
+            if (typeof window.siteConfig === 'undefined') {
+                console.error('Configuração do site não carregada');
+                return;
+            }
+            stripe = Stripe(window.siteConfig.STRIPE_PUBLIC_KEY);
+        }
+
+        async function checkout(quizData = {}, btn = null) {
+            if (!stripe) {
+                alert('Sistema de pagamento não inicializado. Recarregue a página.');
+                return;
+            }
+
+            const productData = {
+                productName: 'Power Chip EcoFuel',
+                priceInCents: 99900,
+                ...quizData
+            };
+
+            try {
+                const response = await fetch(`${window.siteConfig.API_BASE_URL}/create-checkout-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+
+                if (!response.ok) throw new Error('Erro ao criar sessão de checkout');
+
+                const session = await response.json();
+                const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+                if (result.error) {
+                    alert(result.error.message);
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = '🛒 COMPRAR AGORA';
+                    }
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao processar pagamento. Tente novamente.');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = '🛒 COMPRAR AGORA';
+                }
+            }
+        }
+
+        function calculateSavings() {
+            const kmMonth = parseFloat(document.getElementById('kmMonth').value) || 1000;
+            const consumption = parseFloat(document.getElementById('consumption').value) || 10;
+            const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 5.50;
+
+            // Cálculo sem chip
+            const litersMonth = kmMonth / consumption;
+            const costMonth = litersMonth * fuelPrice;
+
+            // Cálculo com chip (20% economia)
+            const newConsumption = consumption * 1.2;
+            const newLitersMonth = kmMonth / newConsumption;
+            const newCostMonth = newLitersMonth * fuelPrice;
+
+            // Economia
+            const monthlySavings = Math.round(costMonth - newCostMonth);
+            const yearlySavings = monthlySavings * 12;
+            const payback = Math.ceil(999 / monthlySavings);
+
+            document.getElementById('monthlySavings').textContent = monthlySavings;
+            document.getElementById('yearlySavings').textContent = yearlySavings;
+            document.getElementById('payback').textContent = payback;
+        }
+
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', () => {
+            initSiteConfig();
+            revealOnScroll();
+            calculateSavings();
+        });
+    </script>
+</body>
+</html>
