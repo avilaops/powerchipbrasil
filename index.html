@@ -20,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+    <link rel="preload" as="image" href="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png">
     <script src="config.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -46,6 +47,23 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Image optimization */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        img[loading="lazy"] {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* Hero Section */
@@ -754,19 +772,19 @@
         }
 
         /* Header */
-        .site-header { 
-            position: sticky; 
-            top: 0; 
-            z-index: 999; 
-            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(26,26,26,0.95) 50%, rgba(26,26,26,0.85) 100%); 
-            backdrop-filter: blur(20px); 
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(26,26,26,0.95) 50%, rgba(26,26,26,0.85) 100%);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,107,0,0.2);
             box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
         .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; }
-        .brand { 
-            font-weight: 900; 
-            color: var(--white); 
+        .brand {
+            font-weight: 900;
+            color: var(--white);
             font-size: 1.3em;
             display: flex;
             align-items: center;
@@ -775,15 +793,15 @@
         }
         .brand img { height: 45px; filter: drop-shadow(0 2px 8px rgba(255,107,0,0.4)); }
         .nav-links { display: flex; gap: 25px; }
-        .nav-links a { 
-            color: rgba(255,255,255,0.9); 
-            text-decoration: none; 
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
         }
-        .nav-links a:hover { 
-            color: var(--primary); 
+        .nav-links a:hover {
+            color: var(--primary);
             transform: translateY(-1px);
         }
         .nav-links a::after {
@@ -836,7 +854,7 @@
     <header class="site-header" role="banner">
         <nav class="nav" aria-label="Principal">
             <a href="#" class="brand">
-                <img src="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png" alt="Powerchip Brasil">
+                <img src="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png" alt="Powerchip Brasil" width="180" height="45" decoding="async">
             </a>
             <div class="nav-links">
                 <a href="#products">Produtos</a>

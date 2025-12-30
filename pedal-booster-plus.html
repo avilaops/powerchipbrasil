@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+    <link rel="preload" as="image" href="chi-potencia-power-chip-pro-pedal-booster-plus-brasil-remap-turbinar-automotivo-carro-moto-picape-camionete-caminhao-vam-facil-instalar-logo-01.png">
+    <link rel="preload" as="image" href="Booster 1.png">
     <script src="config.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -46,54 +48,54 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(26,26,26,0.95) 50%, rgba(26,26,26,0.85) 100%); 
-            backdrop-filter: blur(20px); 
+            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(26,26,26,0.95) 50%, rgba(26,26,26,0.85) 100%);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,107,0,0.2);
             box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
-        
-        .nav { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 16px 20px; 
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
         }
-        
-        .brand { 
-            font-weight: 900; 
-            color: var(--white); 
+
+        .brand {
+            font-weight: 900;
+            color: var(--white);
             font-size: 1.3em;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
-        .brand img { 
-            height: 45px; 
-            filter: drop-shadow(0 2px 8px rgba(255,107,0,0.4)); 
+
+        .brand img {
+            height: 45px;
+            filter: drop-shadow(0 2px 8px rgba(255,107,0,0.4));
         }
-        
-        .nav-links { 
-            display: flex; 
-            gap: 25px; 
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
         }
-        
-        .nav-links a { 
-            color: rgba(255,255,255,0.9); 
-            text-decoration: none; 
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
         }
-        
-        .nav-links a:hover { 
-            color: var(--primary); 
+
+        .nav-links a:hover {
+            color: var(--primary);
             transform: translateY(-1px);
         }
-        
+
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -104,9 +106,9 @@
             background: var(--primary);
             transition: width 0.3s ease;
         }
-        
-        .nav-links a:hover::after { 
-            width: 100%; 
+
+        .nav-links a:hover::after {
+            width: 100%;
             color: var(--white);
             padding: 60px 20px;
             position: relative;
@@ -779,12 +781,12 @@
         <div class="container">
             <div class="product-grid">
                 <div class="product-images">
-                    <img src="Booster 1.png" alt="Pedal Booster Plus" class="main-image" id="mainImage">
+                    <img src="Booster 1.png" alt="Pedal Booster Plus" class="main-image" id="mainImage" width="500" height="500" decoding="async">
                     <div class="image-gallery">
-                        <img src="Booster 1.png" alt="Vista 1" class="gallery-thumb" onclick="changeImage('Booster 1.png')">
-                        <img src="Booster 2.png" alt="Vista 2" class="gallery-thumb" onclick="changeImage('Booster 2.png')">
-                        <img src="Booster 3.png" alt="Vista 3" class="gallery-thumb" onclick="changeImage('Booster 3.png')">
-                        <img src="Booster 4.png" alt="Vista 4" class="gallery-thumb" onclick="changeImage('Booster 4.png')">
+                        <img src="Booster 1.png" alt="Vista 1" class="gallery-thumb" onclick="changeImage('Booster 1.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="Booster 2.png" alt="Vista 2" class="gallery-thumb" onclick="changeImage('Booster 2.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="Booster 3.png" alt="Vista 3" class="gallery-thumb" onclick="changeImage('Booster 3.png')" width="120" height="120" loading="lazy" decoding="async">
+                        <img src="Booster 4.png" alt="Vista 4" class="gallery-thumb" onclick="changeImage('Booster 4.png')" width="120" height="120" loading="lazy" decoding="async">
                     </div>
                 </div>
 
